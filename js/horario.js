@@ -79,8 +79,35 @@
     return { abierto: false, texto: "Cerrado" };
   }
 
+  // Franja del día en Colombia, para el saludo del encabezado.
+  function franja(cuando) {
+    var m = ahoraEnColombia(cuando).minutos;
+    if (m >= 300 && m < 720) return "manana";     // 5:00 – 11:59
+    if (m >= 720 && m < 1020) return "tarde";     // 12:00 – 16:59
+    if (m >= 1020 && m < 1260) return "atardecer";// 17:00 – 20:59
+    return "noche";                                // 21:00 – 4:59
+  }
+
+  var SALUDOS = {
+    manana:    { abierto: "Buenos días · el café ya está puesto",
+                 cerrado: "Buenos días · abrimos a la 1:00 p.m." },
+    tarde:     { abierto: "Buenas tardes · café recién hecho y cocina andando",
+                 cerrado: "Buenas tardes · abrimos a la 1:00 p.m." },
+    atardecer: { abierto: "Cae la tarde · la barra ya está abierta",
+                 cerrado: "Cae la tarde · hoy no abrimos" },
+    noche:     { abierto: "Buena noche · la cocina sigue",
+                 cerrado: "Buena noche · nos vemos mañana" }
+  };
+
+  function saludo(horarios, cuando) {
+    var e = estado(horarios, cuando);
+    return SALUDOS[franja(cuando)][e.abierto ? "abierto" : "cerrado"];
+  }
+
   global.TuColitaHorario = {
     estado: estado,
+    saludo: saludo,
+    franja: franja,
     horaBonita: horaBonita,
     ahoraEnColombia: ahoraEnColombia,
     CLAVES_DIA: CLAVES_DIA

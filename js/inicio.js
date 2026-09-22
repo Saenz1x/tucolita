@@ -24,16 +24,21 @@
 
   function pintarEstado(preapertura) {
     var caja = $("#estado-negocio");
+    var kicker = $("#hero-kicker");
     if (!caja || !horariosNegocio) return;
     var texto = caja.querySelector(".estado__texto");
+
     if (preapertura) {
       caja.classList.remove("estado--abierto");
       texto.textContent = "Abrimos pronto";
+      if (kicker) kicker.textContent = "Café · Cocina · Lounge — El Centro de Buenaventura";
       return;
     }
     var e = TuColitaHorario.estado(horariosNegocio);
     caja.classList.toggle("estado--abierto", e.abierto);
     texto.textContent = e.texto;
+    // El encabezado saluda según la hora de Buenaventura.
+    if (kicker) kicker.textContent = TuColitaHorario.saludo(horariosNegocio);
   }
 
   function pintarTablaHorarios() {
@@ -250,9 +255,13 @@
     pintarTextos(negocio.textos);
     pintarTablaHorarios();
 
-    var enPreapertura = !!(pre && pre.modo && Date.now() < Date.parse(pre.apertura));
-    pintarEstado(enPreapertura);
-    if (!enPreapertura) setInterval(function () { pintarEstado(false); }, 60000);
+    // El estado se recalcula cada medio minuto, así que cuando el
+    // contador llega a cero la página pasa a modo en vivo sola.
+    var apertura = pre ? Date.parse(pre.apertura) : 0;
+    var enPreapertura = function () { return !!(pre && pre.modo && Date.now() < apertura); };
+    pintarEstado(enPreapertura());
+    setInterval(function () { pintarEstado(enPreapertura()); }, 30000);
+    document.addEventListener("tucolita:abierto", function () { pintarEstado(false); });
   }).catch(function () {
     // Sin datos no hay indicador en vivo; la página sigue siendo usable.
     var caja = $("#estado-negocio");

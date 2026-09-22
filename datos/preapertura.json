@@ -11,5 +11,8 @@
     "gracias": "Listo. Cuando abramos, te avisamos primero a ti.",
     "yaAbrimos": "Ya abrimos"
   },
-  "codigos": []
+  "codigos": [
+    { "etiqueta": "INVITADOS", "hash": "c48ed95b10d6fb53a5fbd65cb27825b6b1462fcc1484580714b4a7c90e2c131b" },
+    { "etiqueta": "PRENSA", "hash": "747c66dfb2de1eaf5f786af5000c8e58c87feeb6501d460be32760b9314cc615" }
+  ]
 }

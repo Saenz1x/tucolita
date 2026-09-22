@@ -383,9 +383,11 @@
       filtrar();
       prepararAzar();
 
-      var enPreapertura = !!(pre && pre.modo && Date.now() < Date.parse(pre.apertura));
-      pintarEstado(enPreapertura);
-      if (!enPreapertura) setInterval(function () { pintarEstado(false); }, 60000);
+      var apertura = pre ? Date.parse(pre.apertura) : 0;
+      var enPreapertura = function () { return !!(pre && pre.modo && Date.now() < apertura); };
+      pintarEstado(enPreapertura());
+      setInterval(function () { pintarEstado(enPreapertura()); }, 30000);
+      document.addEventListener("tucolita:abierto", function () { pintarEstado(false); });
 
       var pie = $("#pie-vigencia");
       var vigencia = datosMenu.vigencia || "";

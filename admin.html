@@ -4,8 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Panel — Tu Colita Lounge</title>
-  <!-- Fuera de los buscadores. Esto lo oculta, no lo protege: la protección real es el token. -->
   <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#0B0908">
+  <meta name="referrer" content="no-referrer">
+  <!-- El panel solo puede hablar con el sitio, con GitHub y con el
+       servicio de contactos. Cualquier otra salida queda bloqueada. -->
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    img-src 'self' data: blob:;
+    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+    font-src https://fonts.gstatic.com;
+    script-src 'self';
+    connect-src 'self' https://api.github.com https://script.google.com https://script.googleusercontent.com https://formspree.io;
+    base-uri 'none';
+    form-action 'self';
+    object-src 'none'">
 
   <link rel="icon" type="image/png" sizes="32x32" href="imagenes/favicon-32.png">
   <link rel="apple-touch-icon" href="imagenes/apple-touch-icon.png">
@@ -17,75 +30,62 @@
 </head>
 <body class="admin">
 
-  <!-- ============ PANTALLA DE ENTRADA ============ -->
-  <section class="adm-entrada" id="pantalla-entrada">
+  <!-- ENTRAR -->
+  <section class="adm-entrada" id="pantalla-clave">
     <div class="adm-entrada__caja">
       <img src="imagenes/marca-chica.webp" alt="Tu Colita Lounge" width="300" height="220">
       <h1>Panel de Tu Colita</h1>
-
-      <!-- Desbloqueo con PIN (solo aparece si hay un token cifrado guardado) -->
-      <form id="form-pin" style="display:none" novalidate>
+      <p class="adm-sub">Entra con tu clave para editar la carta.</p>
+      <form id="form-clave" novalidate>
         <div class="campo">
-          <label for="pin-desbloqueo">PIN de este dispositivo</label>
-          <input type="password" id="pin-desbloqueo" inputmode="numeric" autocomplete="off" maxlength="6" placeholder="••••">
+          <label for="campo-clave">Clave</label>
+          <input type="password" id="campo-clave" autocomplete="current-password" placeholder="••••••••">
         </div>
-        <p class="adm-error" id="error-pin"></p>
-        <button class="btn btn--oro" type="submit" style="width:100%;margin-top:1rem">Desbloquear</button>
-        <button class="btn btn--fantasma" type="button" id="olvidar-pin" style="width:100%;margin-top:.5rem">Entrar con otro token</button>
+        <p class="adm-error" id="error-clave" role="alert"></p>
+        <button class="btn btn--oro" type="submit" style="width:100%;margin-top:1rem">Entrar</button>
       </form>
+    </div>
+  </section>
 
-      <form id="form-entrada" novalidate>
+  <!-- CONECTAR (solo la primera vez en cada dispositivo) -->
+  <section class="adm-entrada" id="pantalla-conexion" hidden>
+    <div class="adm-entrada__caja">
+      <img src="imagenes/marca-chica.webp" alt="Tu Colita Lounge" width="300" height="220">
+      <h1>Conectar este celular</h1>
+      <p class="adm-sub">Solo se hace una vez. Después entras únicamente con tu clave.</p>
+      <form id="form-conexion" novalidate>
         <div class="campo">
-          <label for="campo-repo">Repositorio (usuario/repositorio)</label>
-          <input type="text" id="campo-repo" autocomplete="off" spellcheck="false" placeholder="usuario/tucolita">
+          <label for="campo-codigo">Código de conexión</label>
+          <input type="password" id="campo-codigo" autocomplete="off" spellcheck="false" placeholder="Pégalo aquí">
+          <span class="ayuda">Queda guardado y cifrado en este celular. No vuelve a pedirse.</span>
         </div>
-        <div class="campo">
-          <label for="campo-rama">Rama</label>
-          <input type="text" id="campo-rama" autocomplete="off" spellcheck="false" value="main">
-        </div>
-        <div class="campo">
-          <label for="campo-token">Token de acceso</label>
-          <input type="password" id="campo-token" autocomplete="off" spellcheck="false" placeholder="github_pat_…">
-        </div>
-        <div class="campo">
-          <label for="campo-pin">PIN opcional (4 a 6 dígitos) <span class="ayuda">Cifra el token en este dispositivo. Es una barrera contra un celular desbloqueado en manos ajenas, no contra un atacante serio.</span></label>
-          <input type="password" id="campo-pin" inputmode="numeric" autocomplete="off" maxlength="6" placeholder="Déjalo vacío si no lo quieres">
-        </div>
-        <div class="campo campo--fila">
-          <input type="checkbox" id="campo-recordar" checked style="width:20px;height:20px;min-height:0;accent-color:var(--oro)">
-          <label for="campo-recordar" style="margin:0">Recordar en este dispositivo</label>
-        </div>
-        <p class="adm-error" id="error-entrada" role="alert"></p>
-        <button class="btn btn--oro" type="submit" id="boton-entrar" style="width:100%;margin-top:1.2rem">Entrar</button>
+        <p class="adm-error" id="error-conexion" role="alert"></p>
+        <button class="btn btn--oro" type="submit" style="width:100%;margin-top:1rem">Conectar</button>
       </form>
-
       <details class="plegable">
-        <summary>¿Cómo consigo el token?</summary>
+        <summary>¿De dónde saco el código?</summary>
         <div class="plegable__cuerpo">
           <ol>
-            <li>Entra a <strong>github.com/settings/personal-access-tokens</strong> e inicia sesión con la cuenta dueña del sitio.</li>
-            <li>Toca el botón verde <strong>"Generate new token"</strong> y elige <strong>"Fine-grained token"</strong>.</li>
-            <li>En <strong>"Token name"</strong> escribe: <em>Panel Tu Colita</em>. En <strong>"Expiration"</strong> elige 1 año y anota la fecha en tu calendario.</li>
-            <li>En <strong>"Repository access"</strong> marca <strong>"Only select repositories"</strong> y elige únicamente el repositorio del sitio.</li>
-            <li>En <strong>"Permissions" → "Repository permissions"</strong> busca <strong>"Contents"</strong> y ponlo en <strong>"Read and write"</strong>. Nada más.</li>
-            <li>Toca <strong>"Generate token"</strong> y copia el código que aparece. <strong>Solo se muestra una vez.</strong></li>
-            <li>Pégalo aquí arriba en "Token de acceso" y toca "Entrar".</li>
+            <li>Entra a <strong>github.com/settings/personal-access-tokens</strong> con la cuenta del sitio.</li>
+            <li>Botón <strong>"Generate new token"</strong> → <strong>"Fine-grained token"</strong>.</li>
+            <li>Nombre: <em>Panel Tu Colita</em>. Vencimiento: 1 año. Anota la fecha.</li>
+            <li><strong>Repository access</strong> → <strong>Only select repositories</strong> → elige el repositorio del sitio.</li>
+            <li><strong>Permissions → Repository permissions → Contents</strong> → <strong>Read and write</strong>. Nada más.</li>
+            <li><strong>Generate token</strong>, copia el código y pégalo arriba. Solo se ve una vez.</li>
           </ol>
-          <p style="margin-top:.8rem">Cuando el token venza, se repiten estos mismos pasos y se pega el nuevo.</p>
+          <p style="margin-top:.8rem">Cuando venza (al año), se repite esto y listo.</p>
         </div>
       </details>
     </div>
   </section>
 
-  <!-- ============ PANEL PRINCIPAL ============ -->
-  <div id="panel" style="display:none">
+  <!-- PANEL -->
+  <div id="panel" hidden>
     <header class="adm-cab">
       <div class="adm-cab__fila">
         <img src="imagenes/marca-chica.webp" alt="" width="300" height="220">
-        <div class="adm-cab__estado" id="estado-conexion">Conectando…</div>
+        <span class="adm-cab__estado" id="estado-conexion"></span>
         <div class="adm-cab__acciones">
-          <button class="btn btn--borde" type="button" id="boton-preview">Vista previa</button>
-          <button class="btn btn--oro" type="button" id="boton-publicar" disabled>Publicar cambios</button>
           <button class="btn btn--fantasma" type="button" id="boton-salir">Salir</button>
         </div>
       </div>
@@ -93,131 +93,166 @@
 
     <main>
       <nav class="adm-pestanas" aria-label="Secciones del panel">
-        <button class="adm-pestana activa" data-pestana="menu" type="button">Menú</button>
+        <button class="adm-pestana activa" data-pestana="productos" type="button">Productos</button>
         <button class="adm-pestana" data-pestana="negocio" type="button">Negocio</button>
-        <button class="adm-pestana" data-pestana="preapertura" type="button">Preapertura</button>
+        <button class="adm-pestana" data-pestana="apertura" type="button">Apertura</button>
         <button class="adm-pestana" data-pestana="contactos" type="button">Contactos</button>
         <button class="adm-pestana" data-pestana="ayuda" type="button">Ayuda</button>
       </nav>
 
-      <!-- PESTAÑA MENÚ -->
-      <section id="pestana-menu" data-panel-de="menu">
-        <div style="display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:1rem">
-          <button class="btn btn--oro" type="button" id="boton-nuevo-producto">+ Nuevo producto</button>
-          <button class="btn btn--borde" type="button" id="boton-respaldo">Descargar respaldo</button>
-          <button class="btn btn--borde" type="button" id="boton-restaurar">Restaurar desde archivo</button>
-          <input type="file" id="archivo-restaurar" accept="application/json,.json" style="display:none">
+      <!-- PRODUCTOS -->
+      <section id="pestana-productos" data-panel-de="productos">
+        <div class="adm-barra">
+          <div class="adm-buscar">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
+            <input type="search" id="buscar-producto" placeholder="Buscar producto…" aria-label="Buscar producto">
+          </div>
+          <button class="btn btn--oro" type="button" id="boton-nuevo">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Agregar
+          </button>
         </div>
-        <div class="campo" style="margin-bottom:1rem">
-          <input type="search" id="buscar-producto-admin" placeholder="Buscar un producto…" aria-label="Buscar un producto">
+
+        <div class="adm-filtros" id="filtros-categoria" role="group" aria-label="Filtrar por categoría"></div>
+
+        <p class="adm-resumen" id="resumen-productos"></p>
+        <div class="adm-productos" id="rejilla-productos"></div>
+        <p class="adm-vacio" id="sin-productos" hidden>No hay productos con esa búsqueda.</p>
+
+        <div class="adm-pie-acciones">
+          <button class="btn btn--vidrio" type="button" id="boton-respaldo">Descargar respaldo</button>
+          <button class="btn btn--vidrio" type="button" id="boton-restaurar">Restaurar respaldo</button>
+          <input type="file" id="archivo-restaurar" accept="application/json,.json" hidden>
         </div>
-        <div id="lista-categorias"></div>
       </section>
 
-      <!-- PESTAÑA NEGOCIO -->
-      <section id="pestana-negocio" data-panel-de="negocio" style="display:none">
-        <h2 style="font-size:1.1rem;margin-bottom:1rem">Horarios</h2>
+      <!-- NEGOCIO -->
+      <section id="pestana-negocio" data-panel-de="negocio" hidden>
+        <h2 class="adm-titulo">Horarios</h2>
         <div id="editor-horarios"></div>
 
-        <h2 style="font-size:1.1rem;margin:2rem 0 .4rem">Datos del negocio</h2>
+        <h2 class="adm-titulo">Datos del negocio</h2>
         <div class="campo"><label for="neg-telefono">Teléfono</label><input type="text" id="neg-telefono"></div>
         <div class="campo"><label for="neg-direccion">Dirección</label><input type="text" id="neg-direccion"></div>
-        <div class="campo"><label for="neg-instagram">Instagram (enlace completo)</label><input type="url" id="neg-instagram"></div>
-        <div class="campo"><label for="neg-tiktok">TikTok (enlace completo)</label><input type="url" id="neg-tiktok"></div>
-        <div class="campo"><label for="neg-facebook">Facebook (enlace completo)</label><input type="url" id="neg-facebook"></div>
-        <div class="campo"><label for="neg-vigencia">Línea de vigencia de la carta <span class="ayuda">Se muestra al pie del menú. Ej.: "Precios vigentes desde el 15 de noviembre de 2026."</span></label><input type="text" id="neg-vigencia"></div>
+        <div class="campo"><label for="neg-instagram">Instagram</label><input type="url" id="neg-instagram"></div>
+        <div class="campo"><label for="neg-tiktok">TikTok</label><input type="url" id="neg-tiktok"></div>
+        <div class="campo"><label for="neg-facebook">Facebook</label><input type="url" id="neg-facebook"></div>
+        <div class="campo"><label for="neg-vigencia">Línea de vigencia de la carta <span class="ayuda">Sale al pie del menú.</span></label><input type="text" id="neg-vigencia"></div>
 
-        <h2 style="font-size:1.1rem;margin:2rem 0 .4rem">Textos de la página de inicio</h2>
-        <div class="campo"><label for="neg-hero-titulo">Titular grande</label><input type="text" id="neg-hero-titulo"></div>
+        <h2 class="adm-titulo">Textos de la portada</h2>
+        <div class="campo"><label for="neg-hero-titulo">Titular</label><input type="text" id="neg-hero-titulo"></div>
         <div class="campo"><label for="neg-hero-bajada">Frase bajo el titular</label><textarea id="neg-hero-bajada"></textarea></div>
+        <div class="campo"><label for="neg-hero-voz">Frase en cursiva</label><input type="text" id="neg-hero-voz"></div>
         <div class="campo"><label for="neg-concepto-titulo">Título de "El sitio"</label><input type="text" id="neg-concepto-titulo"></div>
-        <div class="campo"><label for="neg-concepto-p1">Párrafo 1 de "El sitio"</label><textarea id="neg-concepto-p1"></textarea></div>
-        <div class="campo"><label for="neg-concepto-p2">Párrafo 2 de "El sitio"</label><textarea id="neg-concepto-p2"></textarea></div>
+        <div class="campo"><label for="neg-concepto-p1">Párrafo 1</label><textarea id="neg-concepto-p1"></textarea></div>
+        <div class="campo"><label for="neg-concepto-p2">Párrafo 2</label><textarea id="neg-concepto-p2"></textarea></div>
         <div class="campo"><label for="neg-noche-titulo">Título de "La noche"</label><input type="text" id="neg-noche-titulo"></div>
         <div class="campo"><label for="neg-noche-parrafo">Párrafo de "La noche"</label><textarea id="neg-noche-parrafo"></textarea></div>
         <div class="campo"><label for="neg-noche-epigrafe">Frase en cursiva de "La noche"</label><input type="text" id="neg-noche-epigrafe"></div>
         <div class="campo"><label for="neg-muro-parrafo">Párrafo de "El muro"</label><textarea id="neg-muro-parrafo"></textarea></div>
-        <button class="btn btn--oro" type="button" id="boton-guardar-negocio" style="margin-top:1.2rem">Guardar estos cambios en memoria</button>
-        <p class="ayuda" style="color:var(--tinta-tenue);font-size:.8rem;margin-top:.5rem">Después de guardar en memoria, toca "Publicar cambios" arriba para que salgan a la web.</p>
+        <button class="btn btn--vidrio" type="button" id="boton-guardar-negocio" style="margin-top:1.2rem">Guardar cambios</button>
       </section>
 
-      <!-- PESTAÑA PREAPERTURA -->
-      <section id="pestana-preapertura" data-panel-de="preapertura" style="display:none">
-        <div class="adm-codigo" style="margin-bottom:1.4rem">
-          <span class="adm-codigo__etiqueta">Modo preapertura</span>
-          <button class="interruptor" type="button" role="switch" aria-checked="true" id="interruptor-preapertura" aria-label="Modo preapertura"></button>
+      <!-- APERTURA -->
+      <section id="pestana-apertura" data-panel-de="apertura" hidden>
+        <div class="adm-fila-switch">
+          <div>
+            <strong>Cortina de preapertura</strong>
+            <span class="ayuda">Mientras esté encendida, la gente ve la cuenta regresiva.</span>
+          </div>
+          <button class="interruptor" type="button" role="switch" aria-checked="true" id="switch-preapertura" aria-label="Cortina de preapertura"></button>
         </div>
         <div class="campo">
-          <label for="pre-fecha">Fecha y hora de apertura <span class="ayuda">Hora de Colombia.</span></label>
+          <label for="pre-fecha">Fecha y hora de apertura <span class="ayuda">Hora de Colombia. Al llegar, la cortina se quita sola.</span></label>
           <input type="datetime-local" id="pre-fecha">
         </div>
-        <div class="campo"><label for="pre-titulo">Titular de la puerta</label><input type="text" id="pre-titulo"></div>
+        <div class="campo"><label for="pre-titulo">Titular de la cortina</label><input type="text" id="pre-titulo"></div>
         <div class="campo"><label for="pre-bajada">Frase bajo el titular</label><input type="text" id="pre-bajada"></div>
         <div class="campo"><label for="pre-captacion">Invitación a dejar el contacto</label><input type="text" id="pre-captacion"></div>
-        <div class="campo"><label for="pre-endpoint">Dirección de captación de contactos <span class="ayuda">La URL del Google Apps Script o Formspree. Los pasos están en el archivo LEEME.</span></label><input type="url" id="pre-endpoint" placeholder="https://script.google.com/macros/s/…/exec"></div>
-        <button class="btn btn--oro" type="button" id="boton-guardar-preapertura" style="margin-top:.6rem">Guardar estos cambios en memoria</button>
+        <div class="campo"><label for="pre-endpoint">Dirección para recibir contactos <span class="ayuda">Los pasos están en la pestaña Ayuda.</span></label><input type="url" id="pre-endpoint" placeholder="https://script.google.com/…/exec"></div>
+        <button class="btn btn--vidrio" type="button" id="boton-guardar-apertura">Guardar cambios</button>
 
-        <h2 style="font-size:1.1rem;margin:2.2rem 0 .8rem">Códigos de invitado</h2>
-        <div class="campo campo--fila" style="grid-template-columns:1fr auto">
-          <input type="text" id="etiqueta-codigo" placeholder="Etiqueta: PRENSA, FAMILIA, PROVEEDORES…" style="text-transform:uppercase">
-          <button class="btn btn--borde" type="button" id="boton-crear-codigo">Crear código</button>
+        <h2 class="adm-titulo">Códigos de invitado</h2>
+        <div class="adm-barra">
+          <div class="adm-buscar" style="flex:1">
+            <input type="text" id="etiqueta-codigo" placeholder="Etiqueta: PRENSA, FAMILIA…" style="text-transform:uppercase;padding-left:1rem">
+          </div>
+          <button class="btn btn--vidrio" type="button" id="boton-crear-codigo">Crear</button>
         </div>
-        <div id="codigo-recien-creado"></div>
-        <div id="lista-codigos" style="margin-top:1rem"></div>
+        <div id="codigo-nuevo"></div>
+        <div id="lista-codigos"></div>
       </section>
 
-      <!-- PESTAÑA CONTACTOS -->
-      <section id="pestana-contactos" data-panel-de="contactos" style="display:none">
-        <div style="display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;margin-bottom:1rem">
-          <button class="btn btn--borde" type="button" id="boton-cargar-contactos">Actualizar lista</button>
+      <!-- CONTACTOS -->
+      <section id="pestana-contactos" data-panel-de="contactos" hidden>
+        <div class="adm-barra">
+          <button class="btn btn--vidrio" type="button" id="boton-cargar-contactos">Actualizar</button>
           <button class="btn btn--oro" type="button" id="boton-csv" disabled>Descargar CSV</button>
-          <span id="contador-contactos" style="color:var(--tinta-tenue);font-size:.85rem"></span>
         </div>
-        <div class="campo" style="margin-bottom:1rem">
-          <input type="search" id="buscar-contacto" placeholder="Buscar un contacto…" aria-label="Buscar un contacto">
+        <p class="adm-resumen" id="contador-contactos"></p>
+        <div class="adm-buscar" style="margin-bottom:1rem">
+          <input type="search" id="buscar-contacto" placeholder="Buscar contacto…" aria-label="Buscar contacto" style="padding-left:1rem">
         </div>
         <div id="tabla-contactos" style="overflow-x:auto"></div>
       </section>
 
-      <!-- PESTAÑA AYUDA -->
-      <section id="pestana-ayuda" data-panel-de="ayuda" style="display:none">
+      <!-- AYUDA -->
+      <section id="pestana-ayuda" data-panel-de="ayuda" hidden>
         <details class="plegable" open>
-          <summary>Cómo funciona esto</summary>
+          <summary>Cómo funciona</summary>
           <div class="plegable__cuerpo">
-            <p>Cada vez que tocas <strong>"Publicar cambios"</strong>, el panel guarda los archivos del sitio y la web real se actualiza sola en menos de un minuto. No hay que subir nada por ningún otro lado.</p>
-            <p style="margin-top:.6rem">Los cambios que haces quedan primero <strong>en memoria</strong> (verás el contador arriba). Nada sale a la web hasta que tocas "Publicar cambios".</p>
+            <p>Lo que editas queda guardado en el celular hasta que tocas <strong>"Publicar"</strong>. Al publicar, la web real se actualiza sola en menos de un minuto.</p>
+            <p style="margin-top:.6rem">Lo que más vas a usar: el interruptor de cada producto para marcarlo agotado. Un toque y publicar.</p>
           </div>
         </details>
         <details class="plegable">
-          <summary>El token: qué es y cómo renovarlo</summary>
+          <summary>Recibir los contactos de la cortina</summary>
           <div class="plegable__cuerpo">
             <ol>
-              <li>Entra a <strong>github.com/settings/personal-access-tokens</strong>.</li>
-              <li><strong>"Generate new token"</strong> → <strong>"Fine-grained token"</strong>.</li>
-              <li>Nombre: <em>Panel Tu Colita</em>. Vencimiento: 1 año (anótalo).</li>
-              <li><strong>"Repository access"</strong> → <strong>"Only select repositories"</strong> → solo el repositorio del sitio.</li>
-              <li><strong>"Permissions" → "Contents"</strong> → <strong>"Read and write"</strong>. Nada más.</li>
-              <li>Generar, copiar (se ve una sola vez) y pegarlo en la pantalla de entrada del panel.</li>
+              <li>Crea una hoja en <strong>sheets.google.com</strong> con estos títulos en la fila 1: <em>fecha, contacto, tipo, origen, utm_source, utm_medium, utm_campaign</em>.</li>
+              <li>Menú <strong>Extensiones → Apps Script</strong>, pega el código que te pasaron con el sitio y guarda.</li>
+              <li><strong>Implementar → Nueva implementación → Aplicación web</strong>. Acceso: <strong>Cualquier persona</strong>.</li>
+              <li>Copia la dirección que termina en <code>/exec</code> y pégala en la pestaña Apertura.</li>
             </ol>
           </div>
         </details>
         <details class="plegable">
           <summary>Si algo sale mal</summary>
           <div class="plegable__cuerpo">
-            <ul style="padding-left:1.2rem;display:grid;gap:.5rem">
-              <li><strong>"El token no sirve"</strong>: casi siempre está vencido. Genera uno nuevo con los pasos de arriba.</li>
-              <li><strong>"Alguien publicó cambios desde otro dispositivo"</strong>: otra persona (u otro celular) publicó mientras editabas. Elige "Recargar" para ver lo último antes de volver a hacer tus cambios.</li>
-              <li><strong>Se dañó el menú</strong>: usa "Restaurar desde archivo" en la pestaña Menú con el último respaldo que hayas descargado.</li>
-              <li><strong>La web no se actualiza</strong>: espera dos minutos y recarga con el navegador en modo incógnito. Si sigue igual, escribe a Saenz Deluxe.</li>
+            <ul class="adm-lista">
+              <li><strong>"El código de conexión no sirve":</strong> se venció. Genera uno nuevo con los pasos de la pantalla de conexión.</li>
+              <li><strong>"Alguien publicó desde otro lado":</strong> otro celular publicó mientras editabas. Elige recargar para ver lo último.</li>
+              <li><strong>Se dañó la carta:</strong> usa "Restaurar respaldo" con el último archivo que descargaste.</li>
+              <li><strong>La web no cambia:</strong> espera dos minutos y abre en una pestaña nueva.</li>
             </ul>
-            <p style="margin-top:.8rem"><strong>Contacto de soporte:</strong> Saenz Deluxe — quien te entregó este sitio.</p>
+          </div>
+        </details>
+        <details class="plegable">
+          <summary>Cambiar la clave</summary>
+          <div class="plegable__cuerpo">
+            <p>Escribe la clave nueva y el panel te da el texto que hay que reemplazar en el archivo <code>datos/negocio.json</code>, en el campo <code>adminHash</code>.</p>
+            <div class="campo">
+              <label for="clave-nueva">Clave nueva</label>
+              <input type="text" id="clave-nueva" autocomplete="off">
+            </div>
+            <button class="btn btn--vidrio" type="button" id="boton-hash">Generar</button>
+            <p class="adm-hash" id="resultado-hash"></p>
           </div>
         </details>
       </section>
     </main>
+
+    <!-- Barra flotante de publicación -->
+    <div class="adm-publicar" id="barra-publicar" hidden>
+      <span id="texto-pendientes"></span>
+      <div class="adm-publicar__botones">
+        <button class="btn btn--vidrio" type="button" id="boton-preview">Vista previa</button>
+        <button class="btn btn--oro" type="button" id="boton-publicar">Publicar</button>
+      </div>
+    </div>
   </div>
 
-  <!-- MODAL DE PRODUCTO -->
+  <!-- Editor de producto -->
   <div class="adm-modal" id="modal-producto" role="dialog" aria-modal="true" aria-labelledby="modal-titulo">
     <div class="adm-modal__caja">
       <div class="adm-modal__cab">
@@ -232,11 +267,11 @@
           <label for="prod-categoria">Categoría</label>
           <select id="prod-categoria"></select>
         </div>
-        <div class="campo" id="campo-categoria-nueva" style="display:none">
+        <div class="campo" id="campo-categoria-nueva" hidden>
           <label for="prod-categoria-nueva">Nombre de la categoría nueva</label>
           <input type="text" id="prod-categoria-nueva">
         </div>
-        <div class="campo"><label for="prod-descripcion">Descripción (corta, qué trae)</label><textarea id="prod-descripcion"></textarea></div>
+        <div class="campo"><label for="prod-descripcion">Descripción <span class="ayuda">Qué trae. Corto.</span></label><textarea id="prod-descripcion"></textarea></div>
         <div class="campo">
           <label for="prod-precio">Precio <span class="ayuda" id="precio-formateado"></span></label>
           <input type="number" id="prod-precio" inputmode="numeric" min="0" step="500" required>
@@ -250,19 +285,19 @@
             <label><input type="checkbox" value="sin licor" name="etiqueta">Sin licor</label>
           </div>
         </div>
-        <div class="campo campo--fila">
+        <div class="adm-fila-switch">
+          <div><strong>Agotado</strong><span class="ayuda">No se puede pedir mientras esté marcado.</span></div>
           <button class="interruptor" type="button" role="switch" aria-checked="false" id="prod-agotado" aria-label="Agotado"></button>
-          <label style="margin:0">Agotado</label>
         </div>
         <div class="campo">
-          <label for="prod-imagen">Foto (opcional) <span class="ayuda">Puedes tomarla con la cámara. El panel la comprime solo.</span></label>
+          <label for="prod-imagen">Foto <span class="ayuda">Puedes tomarla con la cámara.</span></label>
           <input type="file" id="prod-imagen" accept="image/*" capture="environment">
-          <img class="adm-imagen-preview" id="prod-imagen-preview" alt="Vista previa de la foto del producto">
+          <img class="adm-imagen-preview" id="prod-imagen-preview" alt="Vista previa de la foto">
         </div>
         <p class="adm-error" id="error-producto" role="alert"></p>
         <div class="adm-acciones-modal">
-          <button class="btn btn--borde" type="button" id="cancelar-producto">Cancelar</button>
-          <button class="btn btn--oro" type="submit">Guardar en memoria</button>
+          <button class="btn btn--vidrio" type="button" id="borrar-producto">Eliminar</button>
+          <button class="btn btn--oro" type="submit">Guardar</button>
         </div>
       </form>
     </div>

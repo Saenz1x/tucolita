@@ -188,7 +188,7 @@
             <img class="hero__marca logo-dia" src="imagenes/marca-tinta.webp" alt=""
                  width="300" height="214" loading="lazy">
 
-            <p class="hero__kicker">Café · Cocina · Lounge — El Centro de Buenaventura</p>
+            <p class="hero__kicker" id="hero-kicker">Café · Cocina · Lounge — El Centro de Buenaventura</p>
             <h1 id="hero-titulo">No hay nada como una buena colita.</h1>
             <p class="hero__bajada" id="hero-bajada">Sánduches de verdad, parrilla al carbón y una barra sin afán. Se abre a la una y se cierra cuando toque.</p>
             <p class="voz hero__voz" id="hero-voz">Ven por el café, quédate hasta que cierren.</p>
@@ -368,26 +368,41 @@
           <img class="logo-dia" src="imagenes/emblema-tinta.webp" alt="" width="300" height="273" loading="lazy">
           <address>
             CL 1 # 2A-11, El Centro<br>
-            Buenaventura, Valle del Cauca<br>
-            <a href="tel:+573123037666">+57 312 303 7666</a>
+            Buenaventura, Valle del Cauca
           </address>
+          <a class="footer__tel" href="tel:+573123037666">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 3h3l1.5 4-2 1.5a12 12 0 0 0 6.5 6.5L17 13l4 1.5v3a2.5 2.5 0 0 1-2.8 2.5A17.5 17.5 0 0 1 3 5.8 2.5 2.5 0 0 1 5.5 3z"/></svg>
+            +57 312 303 7666
+          </a>
         </div>
-        <ul class="footer__enlaces">
-          <li><a href="menu.html">El menú</a></li>
-          <li><a href="https://padlet.com/tucolita/tu-colita-lounge-s023stey0vqshekxe2nj" target="_blank" rel="noopener">El muro de la comunidad</a></li>
-          <li><a href="https://wa.me/573123037666?text=Hola%2C%20quiero%20pedir%20un%20domicilio%20%F0%9F%9B%B5" target="_blank" rel="noopener">Domicilios</a></li>
-          <li><a href="https://wa.me/573123037666?text=Hola%2C%20quiero%20reservar%20una%20mesa%20en%20Tu%20Colita%20%E2%9C%A8" target="_blank" rel="noopener">Reservas</a></li>
-        </ul>
-        <div class="redes">
-          <a href="https://instagram.com/tucolita.lounge" target="_blank" rel="noopener" aria-label="Instagram de Tu Colita">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5.2"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.3" cy="6.7" r="1.05" fill="currentColor" stroke="none"/></svg>
-          </a>
-          <a href="https://tiktok.com/@tucolita.lounge" target="_blank" rel="noopener" aria-label="TikTok de Tu Colita">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.6 3.2v10.9a3.4 3.4 0 1 1-3.4-3.4c.28 0 .55.03.8.1"/><path d="M14.6 3.2c.32 2.32 2.03 4.02 4.35 4.25"/></svg>
-          </a>
-          <a href="https://facebook.com/tucolita.lounge" target="_blank" rel="noopener" aria-label="Facebook de Tu Colita">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.55-1.5h1.65V3.62c-.29-.04-1.27-.13-2.42-.13-2.4 0-4.04 1.47-4.04 4.16v2.32H7.5V13h2.74v8z"/></svg>
-          </a>
+
+        <div>
+          <p class="footer__titulo">El sitio</p>
+          <ul class="footer__enlaces">
+            <li><a href="menu.html">El menú</a></li>
+            <li><a href="#concepto">El concepto</a></li>
+            <li><a href="#ubicacion">Cómo llegar</a></li>
+            <li><a href="https://padlet.com/tucolita/tu-colita-lounge-s023stey0vqshekxe2nj" target="_blank" rel="noopener">El muro</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <p class="footer__titulo">Escríbenos</p>
+          <ul class="footer__enlaces">
+            <li><a href="https://wa.me/573123037666?text=Hola%2C%20quiero%20pedir%20un%20domicilio%20%F0%9F%9B%B5" target="_blank" rel="noopener">Pedir domicilio</a></li>
+            <li><a href="https://wa.me/573123037666?text=Hola%2C%20quiero%20reservar%20una%20mesa%20en%20Tu%20Colita%20%E2%9C%A8" target="_blank" rel="noopener">Reservar mesa</a></li>
+          </ul>
+          <div class="redes" style="margin-top:1rem">
+            <a href="https://instagram.com/tucolita.lounge" target="_blank" rel="noopener" aria-label="Instagram de Tu Colita">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5.2"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.3" cy="6.7" r="1.05" fill="currentColor" stroke="none"/></svg>
+            </a>
+            <a href="https://tiktok.com/@tucolita.lounge" target="_blank" rel="noopener" aria-label="TikTok de Tu Colita">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.6 3.2v10.9a3.4 3.4 0 1 1-3.4-3.4c.28 0 .55.03.8.1"/><path d="M14.6 3.2c.32 2.32 2.03 4.02 4.35 4.25"/></svg>
+            </a>
+            <a href="https://facebook.com/tucolita.lounge" target="_blank" rel="noopener" aria-label="Facebook de Tu Colita">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.55-1.5h1.65V3.62c-.29-.04-1.27-.13-2.42-.13-2.4 0-4.04 1.47-4.04 4.16v2.32H7.5V13h2.74v8z"/></svg>
+            </a>
+          </div>
         </div>
       </div>
 

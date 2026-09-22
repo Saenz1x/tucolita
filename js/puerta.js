@@ -30,23 +30,30 @@
 
   /* ---------- abrir la puerta ---------- */
 
+  function avisarApertura() {
+    document.dispatchEvent(new CustomEvent("tucolita:abierto"));
+  }
+
   function destapar(inmediato) {
     if (!raiz.classList.contains("cerrado")) return;
     if (inmediato || !puerta) {
       raiz.classList.remove("cerrado");
       if (puerta) puerta.remove();
+      avisarApertura();
       return;
     }
     var reducido = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reducido) {
       raiz.classList.remove("cerrado");
       puerta.remove();
+      avisarApertura();
       return;
     }
     puerta.classList.add("abriendo");
     setTimeout(function () {
       raiz.classList.remove("cerrado");
       puerta.remove();
+      avisarApertura();
     }, 850);
   }
 
