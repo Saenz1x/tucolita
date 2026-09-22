@@ -9,7 +9,7 @@ Este es el manual de tu página **tucolita.com**. Está escrito para ti, no para
 ## 1. Qué tienes
 
 - **tucolita.com** — la página principal del negocio.
-- **tucolita.com/menu.html** — la carta completa, con buscador y pedidos por WhatsApp.
+- **tucolita.com/menu.html** — la carta completa, con buscador, filtros, modo noche/tarde y pedidos por WhatsApp. Trae un botón **"Elegí por mí"** que le saca un plato al azar al que no se decide (solo cocina y cocteles: nunca una gaseosa ni una adición suelta, y nunca algo marcado como agotado).
 - **tucolita.com/admin.html** — tu panel privado. Desde el celular editas la carta, los precios, las fotos y los textos, y los cambios salen a la web real en menos de un minuto. No hay que pagar hosting ni mensualidad: el sitio vive gratis en GitHub Pages.
 
 Mientras el local no abra, la página muestra una **cortina de preapertura**: cuenta regresiva, un campo para que la gente deje su contacto, y una entrada con código para invitados.
@@ -18,7 +18,35 @@ Mientras el local no abra, la página muestra una **cortina de preapertura**: cu
 
 ---
 
-## 2. Entrar al panel por primera vez
+## 2. Cómo se llega al panel
+
+Al final de la página de inicio, abajo del todo, hay un botón discreto que dice **"Admin"**. Al tocarlo pide una clave.
+
+**La clave de entrada es:** `colita2026`
+
+Cámbiala apenas puedas (más abajo te digo cómo). Y entiende bien qué hace y qué no:
+
+- Esa clave **solo esconde el enlace** para que nadie entre por curiosidad desde el celular. Igual que la cortina de preapertura, es una cortina, no una cerradura: alguien con conocimientos técnicos puede llegar a `tucolita.com/admin.html` sin ella.
+- **Lo que de verdad protege el sitio es el token de GitHub.** Sin token no se puede cambiar ni una coma, aunque alguien llegue al panel. Por eso el token es lo que hay que cuidar.
+
+### Cambiar la clave
+
+La clave no se guarda escrita en ninguna parte: lo que se guarda es una huella suya (un "hash"), que no se puede devolver a la clave original. Para cambiarla hay que generar la huella de la clave nueva. Pídeselo a Saenz Deluxe, o hazlo tú así:
+
+1. Abre **tucolita.com** en el celular o el computador.
+2. Toca y mantén en cualquier parte vacía de la página → **"Inspeccionar"** (en computador, la tecla **F12**) → pestaña **"Console"**.
+3. Pega esto, cambiando `MICLAVENUEVA` por la que quieras, y dale Enter:
+
+```
+crypto.subtle.digest('SHA-256', new TextEncoder().encode('MICLAVENUEVA')).then(b => console.log([...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')))
+```
+
+4. Copia el texto largo que salga.
+5. En el repositorio de GitHub, abre `datos/negocio.json`, reemplaza lo que está en `"adminHash"` por ese texto y guarda.
+
+---
+
+## 3. Entrar al panel por primera vez
 
 Necesitas un **token**: una clave larga que le da permiso al panel para editar el sitio. Se saca una vez al año.
 
@@ -36,7 +64,7 @@ Cuando el token venza (al año), repites los pasos 1 a 7. Ya está.
 
 ---
 
-## 3. El uso de todos los días
+## 4. El uso de todos los días
 
 **Marcar algo como agotado** (lo que más vas a usar): pestaña **"Menú"** → busca el producto → toca el **interruptor** de su fila. Luego **"Publicar cambios"** arriba. En un minuto la carta lo muestra tachado y sin botón de pedir.
 
@@ -56,7 +84,7 @@ Cuando el token venza (al año), repites los pasos 1 a 7. Ya está.
 
 ---
 
-## 4. La cortina de preapertura
+## 5. La cortina de preapertura
 
 En la pestaña **"Preapertura"** del panel están:
 
@@ -83,7 +111,7 @@ La fecha de apertura vive en dos lugares: en `datos/preapertura.json` (la que ma
 
 ---
 
-## 4-bis. El muro de fotos (Padlet)
+## 6. El muro de fotos (Padlet)
 
 El muro va embebido en la página de inicio y funciona solo. Un detalle de presentación: por defecto el Padlet viene con fondo amarillo y desentona con el negro y dorado del sitio.
 
@@ -91,7 +119,7 @@ Para que combine, entra a tu Padlet, toca el ícono de **engranaje** (Configurac
 
 ---
 
-## 5. Los contactos que deja la gente
+## 7. Los contactos que deja la gente
 
 La cortina invita a dejar **correo o WhatsApp** a cambio de ver la carta. Esos datos caen en una hoja de cálculo tuya (Google Sheets). Para activarlo hay que hacer esto **una sola vez** (pídele ayuda a Saenz Deluxe si prefieres):
 
@@ -145,7 +173,7 @@ Con Formspree los contactos llegan a esa plataforma y a tu correo; la pestaña "
 
 ---
 
-## 6. El día de la apertura
+## 8. El día de la apertura
 
 Casi todo pasa solo. La lista completa:
 
@@ -156,7 +184,7 @@ Casi todo pasa solo. La lista completa:
 
 ---
 
-## 7. Cómo se publica el sitio (referencia técnica)
+## 9. Cómo se publica el sitio (referencia técnica)
 
 Esto ya debería estar hecho; queda anotado por si hay que rehacerlo.
 
@@ -172,7 +200,7 @@ Esto ya debería estar hecho; queda anotado por si hay que rehacerlo.
 
 ---
 
-## 8. Pendientes por confirmar (están provisionales)
+## 10. Pendientes por confirmar (están provisionales)
 
 - **Cobertura de domicilios** — si se limita a ciertos barrios, hay que decirlo en la página.
 - **Vigencia de la carta nueva** — la línea "precios vigentes desde…" del pie del menú se edita en la pestaña Negocio.
@@ -180,11 +208,11 @@ Esto ya debería estar hecho; queda anotado por si hay que rehacerlo.
 
 ---
 
-## 9. Si algo sale mal
+## 11. Si algo sale mal
 
 | Qué pasa | Qué hacer |
 |---|---|
-| "El token no sirve" | Casi siempre está vencido. Genera uno nuevo (sección 2). |
+| "El token no sirve" | Casi siempre está vencido. Genera uno nuevo (sección 3). |
 | "Alguien publicó cambios desde otro dispositivo" | Otro celular publicó mientras editabas. Elige **recargar** para ver lo último; tus cambios en memoria se repiten después. Solo **fuerza** tus cambios si estás seguro de que lo tuyo es lo bueno. |
 | Se dañó el menú | Pestaña Menú → **"Restaurar desde archivo"** con el último respaldo. |
 | La web no se actualiza | Espera dos minutos, abre en modo incógnito. Si sigue igual, escribe a Saenz Deluxe. |

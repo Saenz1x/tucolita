@@ -25,9 +25,10 @@
   },
   "vigenciaCarta": "PROVISIONAL — confirmar con el cliente la fecha de vigencia de la carta nueva",
   "coberturaDomicilios": "PROVISIONAL — confirmar con el cliente si la cobertura se limita a ciertos barrios",
+  "adminHash": "1bfc3f2e0d48476c8a438f2700ed9f0f7932ede6922489af98ff5499369a2a94",
   "textos": {
-    "heroTitulo": "La esquina donde el día se queda hasta tarde.",
-    "heroBajada": "Café por la tarde, sánduches de verdad y una barra que no tiene apuro. El Centro, Buenaventura.",
+    "heroTitulo": "Se entra por un café y se sale tarde.",
+    "heroBajada": "Sánduches de verdad, parrilla al carbón y una barra sin afán. El Centro de Buenaventura.",
     "conceptoTitulo": "Un solo sitio para toda la tarde",
     "conceptoParrafo1": "Tu Colita empezó siendo la esquina de los sánduches y terminó siendo otra cosa: un lugar donde el café de las cuatro se va alargando hasta que alguien pide la primera cerveza.",
     "conceptoParrafo2": "Cocina de verdad, barra propia y mesas para quedarse. Sin apuro, que para eso está el Centro.",

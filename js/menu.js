@@ -234,6 +234,79 @@
     campoBusqueda.focus();
   }
 
+  /* ---------- "Elegí por mí": la casa escoge un plato ---------- */
+
+  // Solo cocina y barra con gracia: nada de adiciones sueltas ni agua.
+  var CATEGORIAS_AZAR = ["Picadas", "A la Parrilla", "Alitas", "Hamburguesas",
+                         "Perros", "Sánduches", "Salchipapas", "Cócteles"];
+  var ultimoAzar = null;
+
+  function candidatosAzar() {
+    return (datosMenu.productos || []).filter(function (p) {
+      return !p.agotado && CATEGORIAS_AZAR.indexOf(p.categoria) >= 0;
+    });
+  }
+
+  function sortear() {
+    var lista = candidatosAzar();
+    if (!lista.length) return null;
+    var elegido;
+    // No repetir el de la tirada anterior, si hay de dónde escoger.
+    do { elegido = lista[Math.floor(Math.random() * lista.length)]; }
+    while (lista.length > 1 && ultimoAzar && elegido.id === ultimoAzar.id);
+    ultimoAzar = elegido;
+    return elegido;
+  }
+
+  function pintarAzar() {
+    var p = sortear();
+    var caja = $("#azar-resultado");
+    var pedir = $("#azar-pedir");
+    if (!p) {
+      caja.innerHTML = '<p class="azar__desc">Ahora mismo no hay nada disponible para sortear.</p>';
+      pedir.style.display = "none";
+      return;
+    }
+    pedir.style.display = "";
+    caja.innerHTML =
+      '<span class="azar__categoria">' + esc(p.categoria) + "</span>" +
+      '<h3 class="azar__nombre">' + esc(p.nombre) + "</h3>" +
+      (p.descripcion ? '<p class="azar__desc">' + esc(p.descripcion) + "</p>" : "") +
+      '<span class="azar__precio">' + precio(p.precio) + "</span>";
+    pedir.href = "https://wa.me/" + WHATSAPP + "?text=" +
+      encodeURIComponent("Hola, quiero pedir: " + p.nombre + " (" + precio(p.precio) + ")");
+  }
+
+  function prepararAzar() {
+    var boton = $("#boton-azar");
+    var modal = $("#modal-azar");
+    if (!boton || !modal) return;
+
+    var girar = function (elDado) {
+      if (elDado && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        elDado.classList.remove("girando");
+        void elDado.offsetWidth;          // reinicia la animación
+        elDado.classList.add("girando");
+      }
+      pintarAzar();
+    };
+
+    boton.addEventListener("click", function () {
+      modal.classList.add("visible");
+      girar(boton.querySelector("svg"));
+    });
+    $("#otra-vez").addEventListener("click", function () {
+      girar($("#boton-azar").querySelector("svg"));
+    });
+
+    var cerrar = function () { modal.classList.remove("visible"); };
+    $("#cerrar-azar").addEventListener("click", cerrar);
+    modal.addEventListener("click", function (ev) { if (ev.target === modal) cerrar(); });
+    document.addEventListener("keydown", function (ev) {
+      if (ev.key === "Escape" && modal.classList.contains("visible")) cerrar();
+    });
+  }
+
   /* ---------- botón volver arriba ---------- */
 
   var botonSubir = $("#boton-subir");
@@ -308,6 +381,7 @@
       if (esPreview) ponerCintaPreview();
       pintarCarta();
       filtrar();
+      prepararAzar();
 
       var enPreapertura = !!(pre && pre.modo && Date.now() < Date.parse(pre.apertura));
       pintarEstado(enPreapertura);
