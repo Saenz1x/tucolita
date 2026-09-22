@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Menú — Tu Colita Lounge</title>
+  <meta name="description" content="La carta completa de Tu Colita Lounge en el Centro de Buenaventura: picadas, parrilla, sánduches, salchipapas, café y barra. Pide por WhatsApp.">
+  <!-- QUITAR el día de la apertura: noindex mientras la carta no sea definitiva -->
+  <meta name="robots" content="noindex">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Menú — Tu Colita Lounge">
+  <meta property="og:description" content="Picadas, parrilla, sánduches, salchipapas, café y barra. El Centro, Buenaventura.">
+  <meta property="og:url" content="https://tucolita.com/menu.html">
+  <meta property="og:image" content="https://tucolita.com/imagenes/og-tucolita.jpg">
+  <meta property="og:locale" content="es_CO">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://tucolita.com/imagenes/og-tucolita.jpg">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="imagenes/favicon-32.png">
+  <link rel="apple-touch-icon" href="imagenes/apple-touch-icon.png">
+
+  <!-- Puerta de preapertura: estas reglas y el script van ANTES de todo CSS
+       para que el sitio jamás se alcance a ver sin pase. -->
+  <style>
+    html.cerrado body > *:not(#puerta){ display:none !important }
+    #puerta{ display:none }
+    /* Negro desde el primer pintado: mientras llega estilos.css no hay
+       destello blanco ni se asoma el sitio de atrás. */
+    html.cerrado, html.cerrado body{ background:#0B0908 }
+  </style>
+  <script>
+    (function(){
+      /* Decisión instantánea, sin red: pase guardado + fecha de respaldo.
+         La fuente de verdad es datos/preapertura.json (la lee puerta.js);
+         esta fecha solo evita el parpadeo del primer pintado. */
+      var APERTURA_RESPALDO = "2026-10-05T13:00:00-05:00";
+      try{
+        var t = localStorage.getItem("tucolita_tema");
+        if (t) document.documentElement.setAttribute("data-tema", t);
+      }catch(e){}
+      try{
+        if (Date.now() < Date.parse(APERTURA_RESPALDO) && !localStorage.getItem("tucolita_pase")){
+          document.documentElement.classList.add("cerrado");
+        }
+      }catch(e){
+        document.documentElement.classList.add("cerrado");
+      }
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Fraunces:ital,opsz,wght@1,9..144,500;1,9..144,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+  <!-- ============ PUERTA DE PREAPERTURA ============ -->
+  <section id="puerta" aria-label="Preapertura de Tu Colita Lounge">
+    <div class="puerta__interior">
+      <img class="puerta__logo" src="imagenes/logo-tucolita.png" alt="Emblema de Tu Colita Lounge" width="190" height="190">
+      <h1 class="puerta__titulo" data-puerta="titulo">Estamos terminando de montar la barra</h1>
+      <p class="puerta__bajada" data-puerta="bajada">El Centro de Buenaventura va a tener dónde quedarse hasta tarde.</p>
+
+      <div class="cuenta" data-puerta="cuenta" role="timer" aria-live="off">
+        <div class="cuenta__bloque"><div class="cuenta__num" data-cuenta="dias">–</div><div class="cuenta__rotulo">Días</div></div>
+        <div class="cuenta__sep" aria-hidden="true"></div>
+        <div class="cuenta__bloque"><div class="cuenta__num" data-cuenta="horas">–</div><div class="cuenta__rotulo">Horas</div></div>
+        <div class="cuenta__sep" data-cuenta="sep-min" aria-hidden="true"></div>
+        <div class="cuenta__bloque" data-cuenta="bloque-min"><div class="cuenta__num" data-cuenta="minutos">–</div><div class="cuenta__rotulo">Minutos</div></div>
+        <div class="cuenta__sep" data-cuenta="sep-seg" aria-hidden="true"></div>
+        <div class="cuenta__bloque" data-cuenta="bloque-seg"><div class="cuenta__num" data-cuenta="segundos">–</div><div class="cuenta__rotulo">Segundos</div></div>
+      </div>
+      <p class="puerta__fecha" data-puerta="fecha"></p>
+
+      <div class="puerta__captacion">
+        <p data-puerta="captacion">Déjanos tu contacto y entra a ver la carta antes que nadie.</p>
+        <form class="puerta__form" data-puerta="form" novalidate>
+          <label class="p-trampa" aria-hidden="true">No llenes este campo
+            <input type="text" name="sitio_web" tabindex="-1" autocomplete="off">
+          </label>
+          <input type="text" name="contacto" inputmode="email" autocomplete="email"
+                 placeholder="Tu correo o tu WhatsApp" aria-label="Tu correo o tu número de WhatsApp">
+          <button class="btn btn--oro" type="submit" data-puerta="boton">Quiero verla</button>
+        </form>
+        <p class="puerta__error" data-puerta="error" role="alert" aria-live="polite"></p>
+        <p class="puerta__nota">Solo lo usamos para avisarte de la apertura.</p>
+      </div>
+
+      <div class="puerta__codigo">
+        <button class="puerta__codigo-enlace" type="button" data-puerta="codigo-enlace">Tengo un código</button>
+        <form class="puerta__codigo-form" data-puerta="codigo-form" novalidate>
+          <input type="text" name="codigo" placeholder="Código de invitado" autocomplete="off"
+                 aria-label="Código de invitado" spellcheck="false">
+          <button class="btn btn--borde" type="submit">Entrar</button>
+        </form>
+      </div>
+
+      <!-- La dirección y las redes se ven sin pasar la puerta -->
+      <div class="puerta__pie">
+        <p>CL 1 # 2A-11, El Centro, Buenaventura</p>
+        <div class="footer__redes">
+          <a href="https://instagram.com/tucolita.lounge" target="_blank" rel="noopener" aria-label="Instagram de Tu Colita">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.2" y1="6.8" x2="17.2" y2="6.8" stroke-width="2.4"/></svg>
+          </a>
+          <a href="https://tiktok.com/@tucolita.lounge" target="_blank" rel="noopener" aria-label="TikTok de Tu Colita">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 8.7v7.1a3.3 3.3 0 1 1-3.3-3.3"/><path d="M9.5 3h3.2c.3 2.9 2 4.8 4.8 5.1v3.2c-1.9-.1-3.5-.8-4.8-1.9v6.4A6.3 6.3 0 1 1 6.4 9.6" transform="scale(.92) translate(1.2 .8)"/></svg>
+          </a>
+          <a href="https://facebook.com/tucolita.lounge" target="_blank" rel="noopener" aria-label="Facebook de Tu Colita">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4h-2.5A3.5 3.5 0 0 0 9 7.5V10H6.5v3H9v7h3v-7h2.6l.4-3H12V7.8c0-.5.4-.8.9-.8H15z"/></svg>
+          </a>
+        </div>
+        <a href="https://wa.me/573123037666?text=Hola%2C%20tengo%20una%20pregunta%20sobre%20Tu%20Colita">Escríbenos por WhatsApp</a>
+      </div>
+    </div>
+  </section>
+  <!-- ============ FIN DE LA PUERTA ============ -->
+
+  <header class="cab-menu">
+    <div class="contenedor cab-menu__fila">
+      <a class="cab-menu__logo" href="index.html" aria-label="Volver al inicio de Tu Colita Lounge">
+        <img src="imagenes/logo-tucolita-blanco.png" alt="" width="40" height="40">
+        <span class="cab-menu__titulo">
+          <strong>Tu Colita</strong>
+          <span>Café · Cocina · Lounge</span>
+        </span>
+      </a>
+      <p class="estado" id="estado-negocio">
+        <span class="estado__punto" aria-hidden="true"></span>
+        <span class="estado__texto">Consultando horario…</span>
+      </p>
+      <nav class="cab-menu__acciones" aria-label="Acciones rápidas">
+        <a href="https://wa.me/573123037666?text=Hola%2C%20quiero%20pedir%20un%20domicilio%20%F0%9F%9B%B5" target="_blank" rel="noopener" aria-label="Pedir domicilio por WhatsApp">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.7-1.2A9 9 0 1 0 12 3z"/><path d="M9 8.5c0 4 2.5 6.5 6.5 6.5l.9-1.8-2.2-1.2-1 .9c-1.1-.5-1.9-1.3-2.4-2.4l.9-1-1.2-2.2z"/></svg>
+        </a>
+        <a href="https://wa.me/573123037666?text=Hola%2C%20quiero%20reservar%20una%20mesa%20en%20Tu%20Colita%20%E2%9C%A8" target="_blank" rel="noopener" aria-label="Reservar mesa por WhatsApp">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="3" x2="8" y2="7"/><line x1="16" y1="3" x2="16" y2="7"/></svg>
+        </a>
+        <a href="https://instagram.com/tucolita.lounge" target="_blank" rel="noopener" aria-label="Instagram de Tu Colita">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.2" y1="6.8" x2="17.2" y2="6.8" stroke-width="2.4"/></svg>
+        </a>
+        <a href="https://www.google.com/maps/search/?api=1&amp;query=CL+1+%23+2A-11%2C+El+Centro%2C+Buenaventura%2C+Valle+del+Cauca" target="_blank" rel="noopener" aria-label="Cómo llegar (Google Maps)">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>
+        </a>
+        <button type="button" id="toggle-tema" class="toggle-tema" aria-label="Cambiar entre modo noche y modo tarde">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13.5A8 8 0 0 1 10.5 4 8 8 0 1 0 20 13.5z"/></svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="contenedor" id="arriba">
+    <noscript>
+      <div class="aviso-carga visible">
+        Este menú se arma con JavaScript y tu navegador lo tiene apagado.
+        Escríbenos por WhatsApp al <a href="https://wa.me/573123037666">+57 312 303 7666</a> y te mandamos la carta completa.
+      </div>
+    </noscript>
+
+    <div class="buscador" id="buscador">
+      <svg class="buscador__lupa" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
+      <input type="search" id="campo-busqueda" placeholder="Buscar en la carta… (alitas, sánduche, margarita)" aria-label="Buscar en la carta" autocomplete="off">
+      <button class="buscador__limpiar" id="limpiar-busqueda" type="button" aria-label="Limpiar búsqueda">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+      </button>
+    </div>
+
+    <div class="chips" id="chips" role="group" aria-label="Filtros rápidos"></div>
+
+    <nav class="pastillas" id="pastillas" aria-label="Categorías del menú">
+      <div class="pastillas__fila contenedor" id="pastillas-fila"></div>
+    </nav>
+
+    <div class="aviso-carga" id="aviso-carga"></div>
+
+    <div id="contenido-menu">
+      <!-- Esqueletos con el ritmo de las tarjetas reales, mientras carga el JSON -->
+      <div class="categoria" aria-hidden="true">
+        <div class="categoria__cab"><span class="kicker">··</span><div class="esqueleto" style="max-width:260px;min-height:36px"></div></div>
+        <div class="productos"><div class="esqueleto"></div><div class="esqueleto"></div><div class="esqueleto"></div><div class="esqueleto"></div></div>
+      </div>
+      <div class="categoria" aria-hidden="true">
+        <div class="categoria__cab"><span class="kicker">··</span><div class="esqueleto" style="max-width:200px;min-height:36px"></div></div>
+        <div class="productos"><div class="esqueleto"></div><div class="esqueleto"></div></div>
+      </div>
+    </div>
+
+    <div class="sin-resultados" id="sin-resultados">
+      <p>Con eso no encontramos nada. Puede que esté escrito distinto, o que todavía no lo tengamos.</p>
+      <button class="btn btn--borde" id="boton-limpiar-todo" type="button">Ver la carta completa</button>
+    </div>
+
+    <footer class="pie-menu">
+      <p>Precios en pesos colombianos. Incluyen impuestos.</p>
+      <p id="pie-vigencia"></p>
+      <p class="aviso-licor">Prohíbase el expendio de bebidas embriagantes a menores de edad. El exceso de alcohol es perjudicial para la salud. Ley 30 de 1986.</p>
+    </footer>
+  </main>
+
+  <button class="subir" id="boton-subir" type="button" aria-label="Volver arriba">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="20" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+  </button>
+
+  <script src="js/puerta.js" defer></script>
+  <script src="js/horario.js" defer></script>
+  <script src="js/menu.js" defer></script>
+</body>
+</html>

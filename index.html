@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tu Colita Lounge — Café, cocina y bar en el Centro de Buenaventura</title>
+  <meta name="description" content="Tu Colita Lounge abre el 5 de octubre en el Centro de Buenaventura: café por la tarde, sánduches de verdad, parrilla y una barra que no tiene apuro. CL 1 # 2A-11.">
+
+  <meta property="og:type" content="restaurant">
+  <meta property="og:title" content="Tu Colita Lounge — Buenaventura">
+  <meta property="og:description" content="Abrimos el 5 de octubre en el Centro de Buenaventura. Café, cocina y una barra que no tiene apuro.">
+  <meta property="og:url" content="https://tucolita.com/">
+  <meta property="og:image" content="https://tucolita.com/imagenes/og-tucolita.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="es_CO">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Tu Colita Lounge — Buenaventura">
+  <meta name="twitter:description" content="Abrimos el 5 de octubre en el Centro de Buenaventura. Café, cocina y una barra que no tiene apuro.">
+  <meta name="twitter:image" content="https://tucolita.com/imagenes/og-tucolita.jpg">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="imagenes/favicon-32.png">
+  <link rel="apple-touch-icon" href="imagenes/apple-touch-icon.png">
+
+  <!-- Puerta de preapertura: estas reglas y el script van ANTES de todo CSS
+       para que el sitio jamás se alcance a ver sin pase. -->
+  <style>
+    html.cerrado body > *:not(#puerta){ display:none !important }
+    #puerta{ display:none }
+    /* Negro desde el primer pintado: mientras llega estilos.css no hay
+       destello blanco ni se asoma el sitio de atrás. */
+    html.cerrado, html.cerrado body{ background:#0B0908 }
+  </style>
+  <script>
+    (function(){
+      /* Decisión instantánea, sin red: pase guardado + fecha de respaldo.
+         La fuente de verdad es datos/preapertura.json (la lee puerta.js);
+         esta fecha solo evita el parpadeo del primer pintado. */
+      var APERTURA_RESPALDO = "2026-10-05T13:00:00-05:00";
+      try{
+        var t = localStorage.getItem("tucolita_tema");
+        if (t) document.documentElement.setAttribute("data-tema", t);
+      }catch(e){}
+      try{
+        if (Date.now() < Date.parse(APERTURA_RESPALDO) && !localStorage.getItem("tucolita_pase")){
+          document.documentElement.classList.add("cerrado");
+        }
+      }catch(e){
+        document.documentElement.classList.add("cerrado");
+      }
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Fraunces:ital,opsz,wght@1,9..144,500;1,9..144,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="estilos.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    "name": "Tu Colita Lounge",
+    "url": "https://tucolita.com/",
+    "image": "https://tucolita.com/imagenes/og-tucolita.jpg",
+    "telephone": "+573123037666",
+    "priceRange": "$$",
+    "servesCuisine": ["Colombiana", "Comida rápida", "Café", "Cócteles"],
+    "openingDate": "2026-10-05",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "CL 1 # 2A-11, El Centro",
+      "addressLocality": "Buenaventura",
+      "addressRegion": "Valle del Cauca",
+      "addressCountry": "CO"
+    },
+    "openingHoursSpecification": [
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Sunday"], "opens": "13:00", "closes": "23:00" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Friday","Saturday"], "opens": "13:00", "closes": "03:00" }
+    ],
+    "hasMenu": "https://tucolita.com/menu.html",
+    "sameAs": [
+      "https://instagram.com/tucolita.lounge",
+      "https://tiktok.com/@tucolita.lounge",
+      "https://facebook.com/tucolita.lounge"
+    ]
+  }
+  </script>
+</head>
+<body>
+
+  <!-- ============ PUERTA DE PREAPERTURA ============ -->
+  <section id="puerta" aria-label="Preapertura de Tu Colita Lounge">
+    <div class="puerta__interior">
+      <img class="puerta__logo" src="imagenes/logo-tucolita.png" alt="Emblema de Tu Colita Lounge" width="190" height="190">
+      <h1 class="puerta__titulo" data-puerta="titulo">Estamos terminando de montar la barra</h1>
+      <p class="puerta__bajada" data-puerta="bajada">El Centro de Buenaventura va a tener dónde quedarse hasta tarde.</p>
+
+      <div class="cuenta" data-puerta="cuenta" role="timer" aria-live="off">
+        <div class="cuenta__bloque"><div class="cuenta__num" data-cuenta="dias">–</div><div class="cuenta__rotulo">Días</div></div>
+        <div class="cuenta__sep" aria-hidden="true"></div>
+        <div class="cuenta__bloque"><div class="cuenta__num" data-cuenta="horas">–</div><div class="cuenta__rotulo">Horas</div></div>
+        <div class="cuenta__sep" data-cuenta="sep-min" aria-hidden="true"></div>
+        <div class="cuenta__bloque" data-cuenta="bloque-min"><div class="cuenta__num" data-cuenta="minutos">–</div><div class="cuenta__rotulo">Minutos</div></div>
+        <div class="cuenta__sep" data-cuenta="sep-seg" aria-hidden="true"></div>
+        <div class="cuenta__bloque" data-cuenta="bloque-seg"><div class="cuenta__num" data-cuenta="segundos">–</div><div class="cuenta__rotulo">Segundos</div></div>
+      </div>
+      <p class="puerta__fecha" data-puerta="fecha"></p>
+
+      <div class="puerta__captacion">
+        <p data-puerta="captacion">Déjanos tu contacto y entra a ver la carta antes que nadie.</p>
+        <form class="puerta__form" data-puerta="form" novalidate>
+          <label class="p-trampa" aria-hidden="true">No llenes este campo
+            <input type="text" name="sitio_web" tabindex="-1" autocomplete="off">
+          </label>
+          <input type="text" name="contacto" inputmode="email" autocomplete="email"
+                 placeholder="Tu correo o tu WhatsApp" aria-label="Tu correo o tu número de WhatsApp">
+          <button class="btn btn--oro" type="submit" data-puerta="boton">Quiero verla</button>
+        </form>
+        <p class="puerta__error" data-puerta="error" role="alert" aria-live="polite"></p>
+        <p class="puerta__nota">Solo lo usamos para avisarte de la apertura.</p>
+      </div>
+
+      <div class="puerta__codigo">
+        <button class="puerta__codigo-enlace" type="button" data-puerta="codigo-enlace">Tengo un código</button>
+        <form class="puerta__codigo-form" data-puerta="codigo-form" novalidate>
+          <input type="text" name="codigo" placeholder="Código de invitado" autocomplete="off"
+                 aria-label="Código de invitado" spellcheck="false">
+          <button class="btn btn--borde" type="submit">Entrar</button>
+        </form>
+      </div>
+
+      <!-- La dirección y las redes se ven sin pasar la puerta -->
+      <div class="puerta__pie">
+        <p>CL 1 # 2A-11, El Centro, Buenaventura</p>
+        <div class="footer__redes">
+          <a href="https://instagram.com/tucolita.lounge" target="_blank" rel="noopener" aria-label="Instagram de Tu Colita">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.2" y1="6.8" x2="17.2" y2="6.8" stroke-width="2.4"/></svg>
+          </a>
+          <a href="https://tiktok.com/@tucolita.lounge" target="_blank" rel="noopener" aria-label="TikTok de Tu Colita">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 8.7v7.1a3.3 3.3 0 1 1-3.3-3.3"/><path d="M9.5 3h3.2c.3 2.9 2 4.8 4.8 5.1v3.2c-1.9-.1-3.5-.8-4.8-1.9v6.4A6.3 6.3 0 1 1 6.4 9.6" transform="scale(.92) translate(1.2 .8)"/></svg>
+          </a>
+          <a href="https://facebook.com/tucolita.lounge" target="_blank" rel="noopener" aria-label="Facebook de Tu Colita">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4h-2.5A3.5 3.5 0 0 0 9 7.5V10H6.5v3H9v7h3v-7h2.6l.4-3H12V7.8c0-.5.4-.8.9-.8H15z"/></svg>
+          </a>
+        </div>
+        <a href="https://wa.me/573123037666?text=Hola%2C%20tengo%20una%20pregunta%20sobre%20Tu%20Colita">Escríbenos por WhatsApp</a>
+      </div>
+    </div>
+  </section>
+  <!-- ============ FIN DE LA PUERTA ============ -->
+
+  <header class="nav" id="nav">
+    <div class="contenedor nav__fila">
+      <a class="nav__logo" href="#inicio" aria-label="Tu Colita Lounge, inicio">
+        <img src="imagenes/logo-tucolita-blanco.png" alt="" width="44" height="44">
+        <span>Tu Colita</span>
+      </a>
+      <ul class="nav__enlaces">
+        <li><a href="#concepto">El sitio</a></li>
+        <li><a href="#noche">La noche</a></li>
+        <li><a href="#muro">El muro</a></li>
+        <li><a href="#ubicacion">Dónde</a></li>
+      </ul>
+      <a class="btn btn--oro" href="menu.html">Ver el menú</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero" id="inicio">
+      <div class="contenedor">
+        <img class="hero__logo" src="imagenes/logo-tucolita.png" alt="Emblema de Tu Colita Lounge: café, cocina y lounge en Buenaventura" width="230" height="230">
+        <h1 id="hero-titulo">La esquina donde el día se queda hasta tarde.</h1>
+        <p class="hero__bajada" id="hero-bajada">Café por la tarde, sánduches de verdad y una barra que no tiene apuro. El Centro, Buenaventura.</p>
+        <p class="estado" id="estado-negocio">
+          <span class="estado__punto" aria-hidden="true"></span>
+          <span class="estado__texto">Consultando horario…</span>
+        </p>
+        <div class="hero__acciones">
+          <a class="btn btn--oro" href="https://wa.me/573123037666?text=Hola%2C%20quiero%20pedir%20un%20domicilio%20%F0%9F%9B%B5" target="_blank" rel="noopener">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.7-1.2A9 9 0 1 0 12 3z"/><path d="M9 8.5c0 4 2.5 6.5 6.5 6.5l.9-1.8-2.2-1.2-1 .9c-1.1-.5-1.9-1.3-2.4-2.4l.9-1-1.2-2.2z"/></svg>
+            Pedir domicilio
+          </a>
+          <a class="btn btn--borde" href="menu.html">Ver el menú</a>
+        </div>
+      </div>
+    </section>
+
+    <hr class="filete" role="presentation">
+
+    <!-- 01 / CONCEPTO -->
+    <section class="seccion concepto" id="concepto">
+      <div class="contenedor">
+        <div class="concepto__rejilla">
+          <div class="revelar">
+            <span class="kicker">01 / Concepto</span>
+            <h2 id="concepto-titulo">Un solo sitio para toda la tarde</h2>
+            <p id="concepto-p1">Tu Colita empezó siendo la esquina de los sánduches y terminó siendo otra cosa: un lugar donde el café de las cuatro se va alargando hasta que alguien pide la primera cerveza.</p>
+            <p id="concepto-p2">Cocina de verdad, barra propia y mesas para quedarse. Sin apuro, que para eso está el Centro.</p>
+          </div>
+          <div class="concepto__imagen revelar" aria-hidden="true">
+            <div class="marco-vacio" style="aspect-ratio:4/5">
+              <img src="imagenes/logo-tucolita-blanco.png" alt="" loading="lazy" width="96" height="96">
+            </div>
+          </div>
+        </div>
+        <div class="fichas revelar">
+          <div class="ficha"><div class="ficha__dato">+80</div><div class="ficha__nota">platos y bebidas en la carta</div></div>
+          <div class="filete-v" role="presentation"></div>
+          <div class="ficha"><div class="ficha__dato">Café de verdad</div><div class="ficha__nota">expreso, capuchino y aromática</div></div>
+          <div class="filete-v" role="presentation"></div>
+          <div class="ficha"><div class="ficha__dato">Barra propia</div><div class="ficha__nota">cócteles, shots y botellas</div></div>
+          <div class="filete-v" role="presentation"></div>
+          <div class="ficha"><div class="ficha__dato">El Centro</div><div class="ficha__nota">a media cuadra del malecón</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 02 / LA NOCHE -->
+    <section class="seccion noche" id="noche">
+      <div class="contenedor">
+        <div class="noche__rejilla">
+          <div class="revelar">
+            <span class="kicker">02 / La noche</span>
+            <h2 id="noche-titulo">Cuando cae la tarde, cambia la música</h2>
+            <p id="noche-parrafo">Cocteles de la barra, cerveza fría y picadas para poner en el centro de la mesa. Los viernes y sábados la cocina acompaña hasta las 3 de la mañana.</p>
+            <p class="voz" id="noche-epigrafe">Ven por el café, quédate hasta que cierren.</p>
+            <div class="hero__acciones" style="justify-content:flex-start">
+              <a class="btn btn--borde" href="https://wa.me/573123037666?text=Hola%2C%20quiero%20reservar%20una%20mesa%20en%20Tu%20Colita%20%E2%9C%A8" target="_blank" rel="noopener">Reservar mesa</a>
+            </div>
+          </div>
+          <div class="noche__imagen revelar" aria-hidden="true">
+            <div class="marco-vacio">
+              <img src="imagenes/logo-tucolita-blanco.png" alt="" loading="lazy" width="96" height="96">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03 / EL MURO -->
+    <section class="seccion muro" id="muro">
+      <div class="contenedor">
+        <span class="kicker">03 / El muro</span>
+        <h2>Las fotos las pone la gente</h2>
+        <p style="color:var(--tinta-suave);margin-top:1rem;max-width:56ch" id="muro-parrafo">Este muro es de los que vienen: fotos de la mesa, del plato, de la noche. Sube la tuya y quédate en la historia del sitio.</p>
+        <!-- El iframe del Padlet solo se carga cuando la sección entra en pantalla -->
+        <div class="muro__marco revelar" id="muro-marco" data-muro="https://padlet.com/tucolita/tu-colita-lounge-s023stey0vqshekxe2nj">
+          <p class="muro__cargando">Cargando el muro…</p>
+        </div>
+        <div class="muro__pie">
+          <a class="btn btn--borde" href="https://padlet.com/tucolita/tu-colita-lounge-s023stey0vqshekxe2nj" target="_blank" rel="noopener">Abrir el muro completo</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 04 / LA CARTA -->
+    <section class="seccion carta-cta">
+      <div class="contenedor revelar">
+        <span class="kicker">04 / La carta</span>
+        <h2 id="carta-titulo">La carta, completa y al día</h2>
+        <ul class="carta-cta__platos">
+          <li>Punta de Anca<span class="precio">$50.000</span></li>
+          <li>Alitas x12<span class="precio">$60.000</span></li>
+          <li>Sándwich Chicharrón<span class="precio">$16.000</span></li>
+          <li>Margarita de Sabores<span class="precio">$27.000</span></li>
+        </ul>
+        <a class="btn btn--oro" href="menu.html" style="min-width:220px">Ver el menú completo</a>
+      </div>
+    </section>
+
+    <!-- 05 / DÓNDE ESTAMOS -->
+    <section class="seccion ubicacion" id="ubicacion">
+      <div class="contenedor">
+        <div class="ubicacion__rejilla">
+          <div class="revelar">
+            <span class="kicker">05 / Dónde estamos</span>
+            <h2>El Centro, Buenaventura</h2>
+            <address>
+              CL 1 # 2A-11, El Centro<br>
+              Buenaventura, Valle del Cauca
+            </address>
+            <div class="ubicacion__acciones">
+              <a class="btn btn--borde" href="https://www.google.com/maps/search/?api=1&amp;query=CL+1+%23+2A-11%2C+El+Centro%2C+Buenaventura%2C+Valle+del+Cauca" target="_blank" rel="noopener">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>
+                Cómo llegar
+              </a>
+              <a class="btn btn--borde" href="https://wa.me/573123037666?text=Hola%2C%20tengo%20una%20pregunta%20sobre%20Tu%20Colita" target="_blank" rel="noopener">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.7-1.2A9 9 0 1 0 12 3z"/></svg>
+                Escribir por WhatsApp
+              </a>
+            </div>
+          </div>
+          <div class="revelar">
+            <span class="kicker">Horario</span>
+            <table class="horarios" id="tabla-horarios">
+              <tbody>
+                <tr><td>Cargando horario…</td><td></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="contenedor">
+      <div class="footer__rejilla">
+        <div class="footer__marca">
+          <img src="imagenes/logo-tucolita-blanco.png" alt="Emblema de Tu Colita Lounge" width="64" height="64">
+          <address>
+            <strong>Tu Colita Lounge</strong><br>
+            CL 1 # 2A-11, El Centro<br>
+            Buenaventura, Valle del Cauca<br>
+            <a href="tel:+573123037666">+57 312 303 7666</a>
+          </address>
+        </div>
+        <ul class="footer__enlaces">
+          <li><a href="menu.html">El menú</a></li>
+          <li><a href="https://padlet.com/tucolita/tu-colita-lounge-s023stey0vqshekxe2nj" target="_blank" rel="noopener">El muro de la comunidad</a></li>
+          <li><a href="https://wa.me/573123037666?text=Hola%2C%20quiero%20pedir%20un%20domicilio%20%F0%9F%9B%B5" target="_blank" rel="noopener">Domicilios</a></li>
+          <li><a href="https://wa.me/573123037666?text=Hola%2C%20quiero%20reservar%20una%20mesa%20en%20Tu%20Colita%20%E2%9C%A8" target="_blank" rel="noopener">Reservas</a></li>
+        </ul>
+        <div class="footer__redes">
+          <a href="https://instagram.com/tucolita.lounge" target="_blank" rel="noopener" aria-label="Instagram de Tu Colita">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.2" y1="6.8" x2="17.2" y2="6.8" stroke-width="2.4"/></svg>
+          </a>
+          <a href="https://tiktok.com/@tucolita.lounge" target="_blank" rel="noopener" aria-label="TikTok de Tu Colita">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 8.7v7.1a3.3 3.3 0 1 1-3.3-3.3"/><path d="M9.5 3h3.2c.3 2.9 2 4.8 4.8 5.1v3.2c-1.9-.1-3.5-.8-4.8-1.9v6.4A6.3 6.3 0 1 1 6.4 9.6" transform="scale(.92) translate(1.2 .8)"/></svg>
+          </a>
+          <a href="https://facebook.com/tucolita.lounge" target="_blank" rel="noopener" aria-label="Facebook de Tu Colita">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4h-2.5A3.5 3.5 0 0 0 9 7.5V10H6.5v3H9v7h3v-7h2.6l.4-3H12V7.8c0-.5.4-.8.9-.8H15z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer__legal">
+        <p class="aviso-licor">Prohíbase el expendio de bebidas embriagantes a menores de edad. El exceso de alcohol es perjudicial para la salud. Ley 30 de 1986.</p>
+        <p>Tu Colita Lounge · Buenaventura, Valle del Cauca · <a href="https://instagram.com/saenzdeluxe" target="_blank" rel="noopener">Sitio por Saenz Deluxe</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/puerta.js" defer></script>
+  <script src="js/horario.js" defer></script>
+  <script src="js/inicio.js" defer></script>
+</body>
+</html>

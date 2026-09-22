@@ -1,0 +1,41 @@
+{
+  "nombre": "Tu Colita Lounge",
+  "descriptor": "Café · Cocina · Lounge",
+  "direccion": "CL 1 # 2A-11, El Centro, Buenaventura",
+  "ciudad": "Buenaventura, Valle del Cauca",
+  "telefono": "+57 312 303 7666",
+  "whatsapp": "573123037666",
+  "enlaces": {
+    "domicilio": "https://wa.me/573123037666?text=Hola%2C%20quiero%20pedir%20un%20domicilio%20%F0%9F%9B%B5",
+    "reserva": "https://wa.me/573123037666?text=Hola%2C%20quiero%20reservar%20una%20mesa%20en%20Tu%20Colita%20%E2%9C%A8",
+    "instagram": "https://instagram.com/tucolita.lounge",
+    "tiktok": "https://tiktok.com/@tucolita.lounge",
+    "facebook": "https://facebook.com/tucolita.lounge",
+    "muro": "https://padlet.com/tucolita/tu-colita-lounge-s023stey0vqshekxe2nj",
+    "mapa": "https://www.google.com/maps/search/?api=1&query=CL+1+%23+2A-11%2C+El+Centro%2C+Buenaventura%2C+Valle+del+Cauca"
+  },
+  "horarios": {
+    "lun": { "abre": "13:00", "cierra": "23:00", "cruzaMedianoche": false, "cerrado": false },
+    "mar": { "abre": "13:00", "cierra": "23:00", "cruzaMedianoche": false, "cerrado": false },
+    "mie": { "abre": "13:00", "cierra": "23:00", "cruzaMedianoche": false, "cerrado": false },
+    "jue": { "abre": "13:00", "cierra": "23:00", "cruzaMedianoche": false, "cerrado": false },
+    "vie": { "abre": "13:00", "cierra": "03:00", "cruzaMedianoche": true, "cerrado": false },
+    "sab": { "abre": "13:00", "cierra": "03:00", "cruzaMedianoche": true, "cerrado": false },
+    "dom": { "abre": "13:00", "cierra": "23:00", "cruzaMedianoche": false, "cerrado": false }
+  },
+  "vigenciaCarta": "PROVISIONAL — confirmar con el cliente la fecha de vigencia de la carta nueva",
+  "coberturaDomicilios": "PROVISIONAL — confirmar con el cliente si la cobertura se limita a ciertos barrios",
+  "textos": {
+    "heroTitulo": "La esquina donde el día se queda hasta tarde.",
+    "heroBajada": "Café por la tarde, sánduches de verdad y una barra que no tiene apuro. El Centro, Buenaventura.",
+    "conceptoTitulo": "Un solo sitio para toda la tarde",
+    "conceptoParrafo1": "Tu Colita empezó siendo la esquina de los sánduches y terminó siendo otra cosa: un lugar donde el café de las cuatro se va alargando hasta que alguien pide la primera cerveza.",
+    "conceptoParrafo2": "Cocina de verdad, barra propia y mesas para quedarse. Sin apuro, que para eso está el Centro.",
+    "nocheTitulo": "Cuando cae la tarde, cambia la música",
+    "nocheParrafo": "Cocteles de la barra, cerveza fría y picadas para poner en el centro de la mesa. Los viernes y sábados la cocina acompaña hasta las 3 de la mañana.",
+    "nocheEpigrafe": "Ven por el café, quédate hasta que cierren.",
+    "muroParrafo": "Este muro es de los que vienen: fotos de la mesa, del plato, de la noche. Sube la tuya y quédate en la historia del sitio.",
+    "cartaTitulo": "La carta, completa y al día",
+    "cartaParrafo": "Más de 80 platos y bebidas, con precios reales. Se pide por WhatsApp desde la misma carta."
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "modo": true,
+  "apertura": "2026-10-05T13:00:00-05:00",
+  "aperturaEnPalabras": "Abrimos el lunes 5 de octubre, 1:00 p.m.",
+  "endpointContactos": "",
+  "textos": {
+    "titulo": "Estamos terminando de montar la barra",
+    "bajada": "El Centro de Buenaventura va a tener dónde quedarse hasta tarde.",
+    "captacion": "Déjanos tu contacto y entra a ver la carta antes que nadie.",
+    "boton": "Quiero verla",
+    "gracias": "Listo. Cuando abramos, te avisamos primero a ti.",
+    "yaAbrimos": "Ya abrimos"
+  },
+  "codigos": []
+}
