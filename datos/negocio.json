@@ -25,7 +25,12 @@
   },
   "vigenciaCarta": "PROVISIONAL — confirmar con el cliente la fecha de vigencia de la carta nueva",
   "coberturaDomicilios": "PROVISIONAL — confirmar con el cliente si la cobertura se limita a ciertos barrios",
-  "adminHash": "1bfc3f2e0d48476c8a438f2700ed9f0f7932ede6922489af98ff5499369a2a94",
+  "acceso": {
+    "usuario": "tucolita.lounge26@gmail.com",
+    "sal": "31a716238c7dc2376a987c8d568f4d48",
+    "iteraciones": 310000,
+    "hash": "9af5ca84f152e2f1e195db0d27033ac3994689dac34c2d753b297ff6bb0c7377"
+  },
   "textos": {
     "heroTitulo": "No hay nada como una buena colita.",
     "heroBajada": "Sánduches de verdad, parrilla al carbón y una barra sin afán. Se abre a la una y se cierra cuando toque.",

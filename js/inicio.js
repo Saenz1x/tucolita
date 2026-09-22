@@ -17,7 +17,7 @@
   ];
 
   var horariosNegocio = null;
-  var hashAdmin = "";
+  var cuentaAdmin = null;
   var pocoMovimiento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   /* ---------- estado abierto / cerrado ---------- */
@@ -51,6 +51,54 @@
         : TuColitaHorario.horaBonita(h.abre) + " – " + TuColitaHorario.horaBonita(h.cierra);
       return "<tr" + (d.clave === hoy ? ' class="hoy"' : "") + "><td>" + d.rotulo + "</td><td>" + valor + "</td></tr>";
     }).join("");
+  }
+
+  /* ---------- horarios del pie, agrupados ---------- */
+
+  // "Lunes a jueves y domingo", "Viernes y sábado": junta los días con el
+  // mismo horario y los nombra por tramos seguidos.
+  function nombrarDias(claves) {
+    var orden = ROTULOS_TABLA.map(function (d) { return d.clave; });
+    var nombre = {};
+    ROTULOS_TABLA.forEach(function (d) { nombre[d.clave] = d.rotulo.toLowerCase(); });
+    var idx = claves.map(function (k) { return orden.indexOf(k); }).sort(function (a, b) { return a - b; });
+
+    var tramos = [], actual = [idx[0]];
+    for (var i = 1; i < idx.length; i++) {
+      if (idx[i] === idx[i - 1] + 1) actual.push(idx[i]);
+      else { tramos.push(actual); actual = [idx[i]]; }
+    }
+    tramos.push(actual);
+
+    var partes = tramos.map(function (t) {
+      var a = nombre[orden[t[0]]], b = nombre[orden[t[t.length - 1]]];
+      if (t.length === 1) return a;
+      if (t.length === 2) return a + " y " + b;
+      return a + " a " + b;
+    });
+    var texto = partes.length > 1
+      ? partes.slice(0, -1).join(", ") + " y " + partes[partes.length - 1]
+      : partes[0];
+    return texto.charAt(0).toUpperCase() + texto.slice(1);
+  }
+
+  function pintarHorariosPie() {
+    var caja = $("#footer-horarios");
+    if (!caja || !horariosNegocio) return;
+    var grupos = {};
+    ROTULOS_TABLA.forEach(function (d) {
+      var h = horariosNegocio[d.clave];
+      if (!h || h.cerrado) return;
+      var llave = h.abre + "-" + h.cierra;
+      (grupos[llave] = grupos[llave] || { h: h, dias: [] }).dias.push(d.clave);
+    });
+    var html = Object.keys(grupos).map(function (k) {
+      var g = grupos[k];
+      return '<div class="footer__horario"><p class="footer__dias">' + nombrarDias(g.dias) +
+        "</p><p>De " + TuColitaHorario.horaBonita(g.h.abre) + " a " +
+        TuColitaHorario.horaBonita(g.h.cierra) + "</p></div>";
+    }).join("");
+    if (html) caja.innerHTML = html;
   }
 
   /* ---------- textos editables desde negocio.json ---------- */
@@ -188,8 +236,14 @@
 
   /* ---------- acceso al panel ---------- */
 
-  function sha256(texto) {
-    return crypto.subtle.digest("SHA-256", new TextEncoder().encode(texto))
+  function huellaContrasena(contrasena, salHex, iteraciones) {
+    var sal = new Uint8Array(salHex.length / 2);
+    for (var i = 0; i < sal.length; i++) sal[i] = parseInt(salHex.substr(i * 2, 2), 16);
+    return crypto.subtle.importKey("raw", new TextEncoder().encode(contrasena), "PBKDF2", false, ["deriveBits"])
+      .then(function (base) {
+        return crypto.subtle.deriveBits(
+          { name: "PBKDF2", salt: sal, iterations: iteraciones, hash: "SHA-256" }, base, 256);
+      })
       .then(function (buf) {
         return Array.from(new Uint8Array(buf)).map(function (b) {
           return b.toString(16).padStart(2, "0");
@@ -201,6 +255,7 @@
     var boton = $("#boton-admin");
     var modal = $("#modal-admin");
     var form = $("#form-admin");
+    var usuario = $("#usuario-admin");
     var campo = $("#clave-admin");
     var error = $("#error-admin");
     if (!boton || !modal) return;
@@ -208,8 +263,9 @@
     var abrir = function () {
       modal.classList.add("visible");
       error.textContent = "";
+      usuario.value = "";
       campo.value = "";
-      setTimeout(function () { campo.focus(); }, 60);
+      setTimeout(function () { usuario.focus(); }, 60);
     };
     var cerrar = function () { modal.classList.remove("visible"); };
 
@@ -224,20 +280,29 @@
     form.addEventListener("submit", function (ev) {
       ev.preventDefault();
       error.textContent = "";
-      var clave = campo.value.trim();
-      if (!clave) return;
-      if (!hashAdmin) {
-        // Sin clave configurada no se bloquea el paso: el panel pide el token igual.
+      var correo = usuario.value.trim().toLowerCase();
+      var clave = campo.value;
+      if (!correo || !clave) { error.textContent = "Faltan datos."; return; }
+      if (!cuentaAdmin) {
+        // Sin cuenta leída no se bloquea el paso: el panel pide el ingreso igual.
         location.href = "admin.html";
         return;
       }
       if (!(window.crypto && crypto.subtle)) {
-        error.textContent = "Este navegador no permite validar la clave aquí. Entra a tucolita.com/admin.html directamente.";
+        error.textContent = "Este navegador no permite validar aquí. Entra a tucolita.com/admin.html directamente.";
         return;
       }
-      sha256(clave).then(function (hash) {
-        if (hash === hashAdmin) location.href = "admin.html";
-        else { error.textContent = "Esa clave no es."; campo.select(); }
+      var boton = form.querySelector("button[type=submit]");
+      boton.disabled = true;
+      huellaContrasena(clave, cuentaAdmin.sal, cuentaAdmin.iteraciones).then(function (h) {
+        boton.disabled = false;
+        if (correo === String(cuentaAdmin.usuario).toLowerCase() && h === cuentaAdmin.hash) {
+          location.href = "admin.html";
+        } else {
+          error.textContent = "Usuario o contraseña incorrectos.";
+          campo.value = "";
+          campo.focus();
+        }
       });
     });
   }
@@ -251,9 +316,10 @@
   ]).then(function (res) {
     var negocio = res[0], pre = res[1];
     horariosNegocio = negocio.horarios;
-    hashAdmin = negocio.adminHash || "";
+    cuentaAdmin = negocio.acceso || null;
     pintarTextos(negocio.textos);
     pintarTablaHorarios();
+    pintarHorariosPie();
 
     // El estado se recalcula cada medio minuto, así que cuando el
     // contador llega a cero la página pasa a modo en vivo sola.

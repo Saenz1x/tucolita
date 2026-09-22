@@ -13,7 +13,6 @@
     preapertura: "datos/preapertura.json"
   };
 
-  var LS_TOKEN = "tc_conexion";
   var LS_INTENTOS = "tc_intentos";
 
   var token = "";
@@ -103,11 +102,27 @@
     return crypto.subtle.digest("SHA-256", new TextEncoder().encode(texto)).then(hex);
   }
 
-  function claveDerivada(secreto, sal) {
+  // Contraseña estirada con PBKDF2 antes de compararla: el hash queda
+  // publicado con el sitio, así que tiene que costar caro de romper.
+  function huellaContrasena(contrasena, salHex, iteraciones) {
+    return crypto.subtle.importKey("raw", new TextEncoder().encode(contrasena), "PBKDF2", false, ["deriveBits"])
+      .then(function (base) {
+        return crypto.subtle.deriveBits(
+          { name: "PBKDF2", salt: deHex(salHex), iterations: iteraciones, hash: "SHA-256" },
+          base, 256);
+      }).then(hex);
+  }
+
+  // La conexión con GitHub se guarda cifrada con la contraseña dentro de
+  // negocio.json. El archivo es público, así que la derivación es lenta a
+  // propósito: cada intento de adivinar la contraseña cuesta caro.
+  var ITER_CONEXION = 600000;
+
+  function claveDerivada(secreto, sal, iteraciones) {
     return crypto.subtle.importKey("raw", new TextEncoder().encode(secreto), "PBKDF2", false, ["deriveKey"])
       .then(function (base) {
         return crypto.subtle.deriveKey(
-          { name: "PBKDF2", salt: sal, iterations: 210000, hash: "SHA-256" },
+          { name: "PBKDF2", salt: sal, iterations: iteraciones, hash: "SHA-256" },
           base, { name: "AES-GCM", length: 256 }, false, ["encrypt", "decrypt"]);
       });
   }
@@ -115,34 +130,17 @@
   function cifrar(texto, secreto) {
     var sal = crypto.getRandomValues(new Uint8Array(16));
     var iv = crypto.getRandomValues(new Uint8Array(12));
-    return claveDerivada(secreto, sal).then(function (k) {
+    return claveDerivada(secreto, sal, ITER_CONEXION).then(function (k) {
       return crypto.subtle.encrypt({ name: "AES-GCM", iv: iv }, k, new TextEncoder().encode(texto));
     }).then(function (c) {
-      return { v: 2, sal: hex(sal), iv: hex(iv), datos: hex(c) };
+      return { it: ITER_CONEXION, sal: hex(sal), iv: hex(iv), datos: hex(c) };
     });
   }
 
   function descifrar(paquete, secreto) {
-    return claveDerivada(secreto, deHex(paquete.sal)).then(function (k) {
+    return claveDerivada(secreto, deHex(paquete.sal), paquete.it || ITER_CONEXION).then(function (k) {
       return crypto.subtle.decrypt({ name: "AES-GCM", iv: deHex(paquete.iv) }, k, deHex(paquete.datos));
     }).then(function (p) { return new TextDecoder().decode(p); });
-  }
-
-  function leerGuardado() {
-    try { return JSON.parse(localStorage.getItem(LS_TOKEN) || "null"); } catch (e) { return null; }
-  }
-
-  function guardarToken(valor, secreto) {
-    return cifrar(valor, secreto).then(function (p) {
-      try { localStorage.setItem(LS_TOKEN, JSON.stringify(p)); } catch (e) { }
-    });
-  }
-
-  function olvidarTodo() {
-    try {
-      localStorage.removeItem(LS_TOKEN);
-      sessionStorage.clear();
-    } catch (e) { }
   }
 
   /* ---------- intentos de clave ---------- */
@@ -238,7 +236,6 @@
     if (!porInactividad && (pendientes > 0 || imagenesPendientes.length) &&
         !confirm("Tienes cambios sin publicar. ¿Salir de todas formas?")) return;
     token = ""; clave = "";
-    try { sessionStorage.clear(); } catch (e) { }
     if (porInactividad) {
       try { sessionStorage.setItem("tc_msg", "Se cerró la sesión por inactividad."); } catch (e) { }
     }
@@ -276,40 +273,53 @@
       return;
     }
 
-    var escrita = $("#campo-clave").value.trim();
-    if (!escrita) return;
+    var usuario = $("#campo-usuario").value.trim().toLowerCase();
+    var escrita = $("#campo-clave").value;
+    if (!usuario || !escrita) { error.textContent = "Faltan datos."; return; }
     anotarIntento();
 
-    var hashEsperado = (archivos.negocioPublico && archivos.negocioPublico.adminHash) || "";
-    sha256(escrita).then(function (h) {
-      if (hashEsperado && h !== hashEsperado) {
-        error.textContent = "Esa clave no es.";
-        $("#campo-clave").select();
+    var cuenta = (archivos.negocioPublico && archivos.negocioPublico.acceso) || null;
+    if (!cuenta) { error.textContent = "No pudimos leer la cuenta. Revisa tu conexión."; return; }
+
+    var boton = ev.target.querySelector("button[type=submit]");
+    boton.disabled = true;
+    boton.textContent = "Verificando…";
+
+    huellaContrasena(escrita, cuenta.sal, cuenta.iteraciones).then(function (h) {
+      boton.disabled = false;
+      boton.textContent = "Entrar";
+      // El mismo mensaje para usuario o contraseña equivocados: así no
+      // se le confirma a nadie cuál de los dos acertó.
+      if (usuario !== String(cuenta.usuario).toLowerCase() || h !== cuenta.hash) {
+        error.textContent = "Usuario o contraseña incorrectos.";
+        $("#campo-clave").value = "";
+        $("#campo-clave").focus();
         return;
       }
       clave = escrita;
       try { localStorage.removeItem(LS_INTENTOS); } catch (e) { }
 
-      var guardado = leerGuardado();
-      if (!guardado) {
+      if (!cuenta.conexion) {
+        // El sitio todavía no tiene conexión configurada: se hace una sola vez.
         $("#pantalla-clave").hidden = true;
         $("#pantalla-conexion").hidden = false;
         $("#campo-codigo").focus();
         return;
       }
-      descifrar(guardado, clave).then(function (t) {
+      boton.disabled = true; boton.textContent = "Entrando…";
+      descifrar(cuenta.conexion, clave).then(function (t) {
         token = t;
-        var boton = ev.target.querySelector("button[type=submit]");
-        boton.disabled = true; boton.textContent = "Entrando…";
-        return conectar().then(abrirPanel).catch(function (e) {
-          boton.disabled = false; boton.textContent = "Entrar";
-          error.textContent = e.message;
-        });
-      }).catch(function () {
-        // El token quedó de una clave anterior: se pide de nuevo.
-        olvidarTodo();
-        $("#pantalla-clave").hidden = true;
-        $("#pantalla-conexion").hidden = false;
+        return conectar().then(abrirPanel);
+      }).catch(function (e) {
+        boton.disabled = false; boton.textContent = "Entrar";
+        if (e && e.message && e.message.indexOf("código") >= 0) {
+          // El código de GitHub venció: se pide uno nuevo, una sola vez.
+          $("#pantalla-clave").hidden = true;
+          $("#pantalla-conexion").hidden = false;
+          $("#error-conexion").textContent = "La conexión del sitio venció. Pega un código nuevo.";
+          return;
+        }
+        error.textContent = "No pudimos abrir el panel. Revisa tu internet e intenta de nuevo.";
       });
     });
   });
@@ -325,8 +335,15 @@
     boton.disabled = true; boton.textContent = "Conectando…";
     token = codigo;
     conectar().then(function () {
-      return guardarToken(codigo, clave);
-    }).then(abrirPanel).catch(function (e) {
+      return cifrar(codigo, clave);
+    }).then(function (paquete) {
+      archivos.negocio.datos.acceso = archivos.negocio.datos.acceso || {};
+      archivos.negocio.datos.acceso.conexion = paquete;
+      return publicarArchivo("negocio");
+    }).then(function () {
+      abrirPanel();
+      aviso("Listo. Desde ahora se entra solo con usuario y contraseña, en cualquier celular.");
+    }).catch(function (e) {
       boton.disabled = false; boton.textContent = "Conectar";
       error.textContent = e.message;
       token = "";
@@ -869,13 +886,41 @@
 
   /* ---------- cambiar clave ---------- */
 
+  // Cambia usuario y contraseña, vuelve a cifrar la conexión con la
+  // contraseña nueva y lo publica todo de una vez.
   $("#boton-hash").addEventListener("click", function () {
-    var nueva = $("#clave-nueva").value.trim();
-    if (!nueva) return;
-    sha256(nueva).then(function (h) {
-      $("#resultado-hash").textContent = h;
-      navigator.clipboard.writeText(h).then(function () { aviso("Copiado."); }).catch(function () { });
-    });
+    var correo = $("#usuario-nuevo").value.trim().toLowerCase();
+    var nueva = $("#clave-nueva").value;
+    var resultado = $("#resultado-hash");
+    if (!correo || !nueva) { aviso("Faltan el usuario o la contraseña.", true); return; }
+    if (nueva.length < 10) { aviso("Usa al menos 10 caracteres.", true); return; }
+    if (!confirm("Desde ahora se entrará con " + correo + " y la contraseña nueva. ¿Seguir?")) return;
+
+    var boton = this;
+    boton.disabled = true;
+    resultado.textContent = "Guardando…";
+    var sal = hex(crypto.getRandomValues(new Uint8Array(16)));
+    var iteraciones = 310000;
+
+    Promise.all([huellaContrasena(nueva, sal, iteraciones), cifrar(token, nueva)])
+      .then(function (r) {
+        archivos.negocio.datos.acceso = {
+          usuario: correo, sal: sal, iteraciones: iteraciones, hash: r[0], conexion: r[1]
+        };
+        return publicarArchivo("negocio");
+      })
+      .then(function () {
+        clave = nueva;
+        $("#usuario-nuevo").value = "";
+        $("#clave-nueva").value = "";
+        resultado.textContent = "Listo. La próxima vez entra con los datos nuevos.";
+        aviso("Contraseña cambiada.");
+      })
+      .catch(function () {
+        resultado.textContent = "";
+        aviso("No se pudo guardar. Intenta de nuevo.", true);
+      })
+      .then(function () { boton.disabled = false; });
   });
 
   /* ---------- publicar ---------- */

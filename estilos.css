@@ -815,55 +815,94 @@ h1,h2,h3,.display{
 .horarios tr.hoy td{ color:var(--oro-texto); font-weight:700 }
 
 /* ------------------------------------------------------------
-   FOOTER
+   FOOTER — todo centrado en una sola columna: marca, lema,
+   horarios en dos tarjetas de vidrio, atajos y dirección.
    ------------------------------------------------------------ */
 .footer{
-  border-top:1px solid var(--linea);
-  padding:clamp(3rem,7vw,4.5rem) 0 2rem;
-  background:var(--fondo-2);
+  border-top:1px solid var(--linea-suave);
+  padding:clamp(3rem,7vw,4.2rem) 0 1.8rem;
 }
-/* Tres columnas que comparten línea de base arriba. En angosto se
-   apilan y todo queda centrado. */
-.footer__rejilla{
-  display:grid;
-  grid-template-columns:1.4fr 1fr 1fr;
-  gap:clamp(2rem,5vw,3.5rem);
-  align-items:start;
+.footer__interior{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
 }
-.footer__titulo{
-  font-size:.68rem;
+.footer__marca{ height:58px; width:auto }
+.footer__lema{
+  margin-top:.9rem;
+  font-size:.72rem;
   font-weight:700;
   letter-spacing:.24em;
   text-transform:uppercase;
-  color:var(--tinta-tenue);
-  margin-bottom:1rem;
-}
-.footer__marca img{ height:88px; width:auto; margin-bottom:1.2rem }
-.footer address{ font-style:normal; color:var(--tinta-suave); font-size:.9rem; line-height:1.75 }
-.footer__tel{
-  display:inline-flex; align-items:center; gap:.45rem;
-  min-height:42px;
-  margin-top:.5rem;
-  font-weight:700;
-  color:var(--oro-texto);
-  text-decoration:none;
-}
-.footer__tel:hover{ color:var(--oro) }
-
-.footer__enlaces{ list-style:none; display:grid; font-size:.9rem }
-.footer__enlaces a{
-  display:inline-flex; align-items:center;
-  min-height:42px;
   color:var(--tinta-suave);
-  text-decoration:none;
-  transition:color var(--rapida);
 }
-.footer__enlaces a:hover{ color:var(--oro-claro) }
 
-.redes{ display:flex; gap:.7rem; flex-wrap:wrap }
+.footer__horarios{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:.7rem;
+  margin-top:1.8rem;
+  width:100%;
+}
+.footer__horario{
+  flex:0 1 260px;
+  padding:1rem 1.2rem;
+  border-radius:var(--radio);
+  background:var(--vidrio);
+  backdrop-filter:var(--desenfoque-sutil);
+  -webkit-backdrop-filter:var(--desenfoque-sutil);
+  border:1px solid var(--vidrio-borde);
+  box-shadow:var(--vidrio-brillo);
+  font-size:.88rem;
+  color:var(--tinta-suave);
+}
+.footer__dias{
+  font-size:.66rem;
+  font-weight:700;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--oro-texto);
+  margin-bottom:.35rem;
+}
+
+.footer__atajos{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:.55rem;
+  margin-top:1.6rem;
+}
+/* Los dos atajos que venden van en oro; el resto en vidrio */
+.atajo--oro{
+  background:var(--oro-degradado);
+  border-color:transparent;
+  color:#1A1207;
+  font-weight:700;
+}
+.atajo--oro:hover{ color:#1A1207; border-color:transparent }
+
+.footer__direccion{
+  margin-top:1.4rem;
+  font-style:normal;
+  font-size:.82rem;
+  color:var(--tinta-tenue);
+  line-height:1.7;
+}
+.footer__direccion a{
+  display:inline-block;
+  padding-block:.6rem;
+  color:inherit;
+  text-decoration:none;
+  white-space:nowrap;
+}
+.footer__direccion a:hover{ color:var(--oro-claro) }
+
+.redes{ display:flex; gap:.6rem; flex-wrap:wrap; justify-content:center }
 .redes a{
   display:grid; place-items:center;
-  width:46px; height:46px;
+  width:44px; height:44px;
   border-radius:50%;
   color:var(--tinta-suave);
   background:var(--vidrio);
@@ -876,53 +915,47 @@ h1,h2,h3,.display{
 .redes a:hover{ color:var(--oro-claro); border-color:var(--oro); transform:translateY(-3px) }
 
 .footer__legal{
-  margin-top:clamp(2.2rem,5vw,3rem);
-  padding-top:1.5rem;
+  width:100%;
+  margin-top:2rem;
+  padding-top:1.3rem;
   border-top:1px solid var(--linea-suave);
-  font-size:.78rem;
+  font-size:.74rem;
   color:var(--tinta-tenue);
   display:grid;
-  gap:.9rem;
+  justify-items:center;
+  gap:.7rem;
 }
-.footer__legal a{
-  color:inherit;
+.aviso-licor{ max-width:62ch; line-height:1.7 }
+.footer__cierre{
+  display:flex; flex-wrap:wrap;
+  gap:.4rem 1rem;
+  align-items:center; justify-content:center;
+}
+/* Crédito del estudio: presente, pero sin pedir atención */
+.footer__credito{
   display:inline-flex; align-items:center;
   min-height:38px;
+  color:var(--tinta-tenue);
+  text-decoration:none;
+  opacity:.8;
+  transition:color var(--rapida), opacity var(--rapida);
 }
-.aviso-licor{ max-width:70ch; line-height:1.7 }
+.footer__credito:hover{ color:var(--oro-claro); opacity:1 }
 
-.footer__cierre{
-  display:flex; flex-wrap:wrap; gap:.8rem 1.4rem;
-  align-items:center; justify-content:space-between;
-}
-.footer__cierre p{ margin:0 }
-
-@media (max-width:860px){
-  .footer__rejilla{ grid-template-columns:1fr 1fr; gap:2.4rem }
-  .footer__marca{ grid-column:1 / -1 }
-}
-@media (max-width:560px){
-  .footer{ text-align:center }
-  .footer__rejilla{ grid-template-columns:1fr; justify-items:center; gap:2.6rem }
-  .footer__marca img{ margin-inline:auto }
-  .footer__enlaces{ justify-items:center }
-  .footer__legal{ justify-items:center }
-  .footer__cierre{ justify-content:center; text-align:center }
-  .aviso-licor{ text-align:center }
-}
 /* Botón de administración: discreto, al final del todo */
 .btn-admin{
-  display:inline-flex; align-items:center; gap:.45rem;
-  font-size:.74rem; font-weight:700;
+  display:inline-flex; align-items:center; gap:.4rem;
+  font-size:.66rem; font-weight:700;
   letter-spacing:.14em; text-transform:uppercase;
   color:var(--tinta-tenue);
-  padding:.55rem .95rem;
+  padding:.45rem .85rem;
   min-height:38px;
   border-radius:99px;
   border:1px solid var(--linea-suave);
-  transition:color var(--rapida), border-color var(--rapida);
+  opacity:.8;
+  transition:color var(--rapida), border-color var(--rapida), opacity var(--rapida);
 }
-.btn-admin:hover{ color:var(--oro-claro); border-color:var(--linea) }
+.btn-admin:hover{ color:var(--oro-claro); border-color:var(--linea); opacity:1 }
 
 /* ------------------------------------------------------------
    MODAL GENÉRICO (clave de administración, plato al azar)
@@ -1517,6 +1550,12 @@ html.cerrado, html.cerrado body{ overflow:hidden }
   display:grid;
   gap:1rem;
   justify-items:center;
+}
+.puerta__pie > a{
+  display:inline-flex; align-items:center;
+  min-height:42px;
+  color:var(--tinta-suave);
+  text-decoration:none;
 }
 .puerta__pie a{ color:var(--tinta-suave); text-decoration:none }
 .puerta__pie a:hover{ color:var(--oro-claro) }

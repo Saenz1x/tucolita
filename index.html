@@ -21,6 +21,7 @@
   <meta name="twitter:image" content="https://tucolita.com/imagenes/og-tucolita.jpg">
 
   <link rel="icon" type="image/png" sizes="32x32" href="imagenes/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="imagenes/favicon-192.png">
   <link rel="apple-touch-icon" href="imagenes/apple-touch-icon.png">
 
   <!-- Puerta de preapertura: estas reglas y el script van ANTES de todo CSS
@@ -361,57 +362,53 @@
   </main>
 
   <footer class="footer">
-    <div class="contenedor">
-      <div class="footer__rejilla">
-        <div class="footer__marca">
-          <img class="logo-noche" src="imagenes/emblema-chico.webp" alt="Tu Colita Lounge" width="300" height="273" loading="lazy">
-          <img class="logo-dia" src="imagenes/emblema-tinta.webp" alt="" width="300" height="273" loading="lazy">
-          <address>
-            CL 1 # 2A-11, El Centro<br>
-            Buenaventura, Valle del Cauca
-          </address>
-          <a class="footer__tel" href="tel:+573123037666">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 3h3l1.5 4-2 1.5a12 12 0 0 0 6.5 6.5L17 13l4 1.5v3a2.5 2.5 0 0 1-2.8 2.5A17.5 17.5 0 0 1 3 5.8 2.5 2.5 0 0 1 5.5 3z"/></svg>
-            +57 312 303 7666
-          </a>
-        </div>
+    <div class="contenedor footer__interior">
+      <img class="footer__marca logo-noche" src="imagenes/marca-chica.webp" alt="Tu Colita Lounge" width="300" height="220" loading="lazy">
+      <img class="footer__marca logo-dia" src="imagenes/marca-tinta.webp" alt="" width="300" height="214" loading="lazy">
+      <p class="footer__lema">Café · Cocina · Lounge — Buenaventura</p>
 
-        <div>
-          <p class="footer__titulo">El sitio</p>
-          <ul class="footer__enlaces">
-            <li><a href="menu.html">El menú</a></li>
-            <li><a href="#concepto">El concepto</a></li>
-            <li><a href="#ubicacion">Cómo llegar</a></li>
-            <li><a href="https://padlet.com/tucolita/tu-colita-lounge-s023stey0vqshekxe2nj" target="_blank" rel="noopener">El muro</a></li>
-          </ul>
+      <div class="footer__horarios" id="footer-horarios">
+        <div class="footer__horario">
+          <p class="footer__dias">Lunes a jueves y domingo</p>
+          <p>De 1:00 p.m. a 11:00 p.m.</p>
         </div>
-
-        <div>
-          <p class="footer__titulo">Escríbenos</p>
-          <ul class="footer__enlaces">
-            <li><a href="https://wa.me/573123037666?text=Hola%2C%20quiero%20pedir%20un%20domicilio%20%F0%9F%9B%B5" target="_blank" rel="noopener">Pedir domicilio</a></li>
-            <li><a href="https://wa.me/573123037666?text=Hola%2C%20quiero%20reservar%20una%20mesa%20en%20Tu%20Colita%20%E2%9C%A8" target="_blank" rel="noopener">Reservar mesa</a></li>
-          </ul>
-          <div class="redes" style="margin-top:1rem">
-            <a href="https://instagram.com/tucolita.lounge" target="_blank" rel="noopener" aria-label="Instagram de Tu Colita">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5.2"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.3" cy="6.7" r="1.05" fill="currentColor" stroke="none"/></svg>
-            </a>
-            <a href="https://tiktok.com/@tucolita.lounge" target="_blank" rel="noopener" aria-label="TikTok de Tu Colita">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.6 3.2v10.9a3.4 3.4 0 1 1-3.4-3.4c.28 0 .55.03.8.1"/><path d="M14.6 3.2c.32 2.32 2.03 4.02 4.35 4.25"/></svg>
-            </a>
-            <a href="https://facebook.com/tucolita.lounge" target="_blank" rel="noopener" aria-label="Facebook de Tu Colita">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.55-1.5h1.65V3.62c-.29-.04-1.27-.13-2.42-.13-2.4 0-4.04 1.47-4.04 4.16v2.32H7.5V13h2.74v8z"/></svg>
-            </a>
-          </div>
+        <div class="footer__horario">
+          <p class="footer__dias">Viernes y sábado</p>
+          <p>De 1:00 p.m. a 3:00 a.m.</p>
         </div>
       </div>
+
+      <nav class="footer__atajos" aria-label="Accesos rápidos">
+        <a class="atajo atajo--oro" href="https://wa.me/573123037666?text=Hola%2C%20quiero%20pedir%20un%20domicilio%20%F0%9F%9B%B5" target="_blank" rel="noopener">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="17.5" r="3"/><circle cx="18" cy="17.5" r="3"/><path d="M9 17.5h6M6 17.5 10 7h4l3 10.5M13 7l-1-3h-2"/></svg>
+          Domicilio
+        </a>
+        <a class="atajo atajo--oro" href="https://wa.me/573123037666?text=Hola%2C%20quiero%20reservar%20una%20mesa%20en%20Tu%20Colita%20%E2%9C%A8" target="_blank" rel="noopener">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="3" x2="8" y2="7"/><line x1="16" y1="3" x2="16" y2="7"/></svg>
+          Reservas
+        </a>
+        <a class="atajo" href="https://instagram.com/tucolita.lounge" target="_blank" rel="noopener">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5.2"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.3" cy="6.7" r="1.05" fill="currentColor" stroke="none"/></svg>
+          Instagram
+        </a>
+        <a class="atajo" href="https://www.google.com/maps/search/?api=1&amp;query=CL+1+%23+2A-11%2C+El+Centro%2C+Buenaventura%2C+Valle+del+Cauca" target="_blank" rel="noopener">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>
+          Cómo llegar
+        </a>
+        <a class="atajo" href="menu.html">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="16" y2="12"/><line x1="4" y1="17" x2="12" y2="17"/></svg>
+          Menú
+        </a>
+      </nav>
+
+      <address class="footer__direccion">CL 1 # 2A-11, El Centro · Buenaventura, Valle del Cauca · <a href="tel:+573123037666">+57 312 303 7666</a></address>
 
       <div class="footer__legal">
         <p class="aviso-licor">Prohíbase el expendio de bebidas embriagantes a menores de edad. El exceso de alcohol es perjudicial para la salud. Ley 30 de 1986.</p>
         <div class="footer__cierre">
-          <p>Tu Colita Lounge · Buenaventura, Valle del Cauca · <a href="https://instagram.com/saenzdeluxe" target="_blank" rel="noopener">Sitio por Saenz Deluxe</a></p>
-          <button class="btn-admin" type="button" id="boton-admin">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10.5" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg>
+          <a class="footer__credito" href="https://instagram.com/saenzdeluxe" target="_blank" rel="noopener">Sitio por Saenz Deluxe</a>
+          <button class="btn-admin" type="button" id="boton-admin" aria-label="Entrar al panel">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10.5" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg>
             Admin
           </button>
         </div>
@@ -426,10 +423,12 @@
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
       </button>
       <h2 id="titulo-admin">Panel de Tu Colita</h2>
-      <p>Solo para el dueño. Escribe la clave para entrar a editar la carta.</p>
+      <p>Solo para el dueño.</p>
       <form id="form-admin" novalidate>
-        <input class="modal__campo" type="password" id="clave-admin" placeholder="Clave"
-               autocomplete="current-password" aria-label="Clave del panel">
+        <input class="modal__campo" type="email" id="usuario-admin" placeholder="Usuario"
+               autocomplete="username" inputmode="email" spellcheck="false" aria-label="Usuario">
+        <input class="modal__campo" type="password" id="clave-admin" placeholder="Contraseña"
+               autocomplete="current-password" aria-label="Contraseña">
         <p class="modal__error" id="error-admin" role="alert"></p>
         <div class="modal__acciones">
           <button class="btn btn--vidrio" type="button" id="cancelar-admin">Cancelar</button>

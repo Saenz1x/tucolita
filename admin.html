@@ -21,6 +21,7 @@
     object-src 'none'">
 
   <link rel="icon" type="image/png" sizes="32x32" href="imagenes/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="imagenes/favicon-192.png">
   <link rel="apple-touch-icon" href="imagenes/apple-touch-icon.png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -35,10 +36,15 @@
     <div class="adm-entrada__caja">
       <img src="imagenes/marca-chica.webp" alt="Tu Colita Lounge" width="300" height="220">
       <h1>Panel de Tu Colita</h1>
-      <p class="adm-sub">Entra con tu clave para editar la carta.</p>
+      <p class="adm-sub">Entra con tu usuario para editar la carta.</p>
       <form id="form-clave" novalidate>
         <div class="campo">
-          <label for="campo-clave">Clave</label>
+          <label for="campo-usuario">Usuario</label>
+          <input type="email" id="campo-usuario" autocomplete="username" inputmode="email"
+                 spellcheck="false" placeholder="correo@ejemplo.com">
+        </div>
+        <div class="campo">
+          <label for="campo-clave">Contraseña</label>
           <input type="password" id="campo-clave" autocomplete="current-password" placeholder="••••••••">
         </div>
         <p class="adm-error" id="error-clave" role="alert"></p>
@@ -47,17 +53,17 @@
     </div>
   </section>
 
-  <!-- CONECTAR (solo la primera vez en cada dispositivo) -->
+  <!-- CONFIGURACIÓN INICIAL (una sola vez para todo el sitio) -->
   <section class="adm-entrada" id="pantalla-conexion" hidden>
     <div class="adm-entrada__caja">
       <img src="imagenes/marca-chica.webp" alt="Tu Colita Lounge" width="300" height="220">
-      <h1>Conectar este celular</h1>
-      <p class="adm-sub">Solo se hace una vez. Después entras únicamente con tu clave.</p>
+      <h1>Configuración inicial</h1>
+      <p class="adm-sub">Se hace una sola vez para todo el sitio. Después, en cualquier celular, se entra solo con usuario y contraseña.</p>
       <form id="form-conexion" novalidate>
         <div class="campo">
           <label for="campo-codigo">Código de conexión</label>
           <input type="password" id="campo-codigo" autocomplete="off" spellcheck="false" placeholder="Pégalo aquí">
-          <span class="ayuda">Queda guardado y cifrado en este celular. No vuelve a pedirse.</span>
+          <span class="ayuda">Queda guardado cifrado con tu contraseña. No vuelve a pedirse.</span>
         </div>
         <p class="adm-error" id="error-conexion" role="alert"></p>
         <button class="btn btn--oro" type="submit" style="width:100%;margin-top:1rem">Conectar</button>
@@ -73,7 +79,7 @@
             <li><strong>Permissions → Repository permissions → Contents</strong> → <strong>Read and write</strong>. Nada más.</li>
             <li><strong>Generate token</strong>, copia el código y pégalo arriba. Solo se ve una vez.</li>
           </ol>
-          <p style="margin-top:.8rem">Cuando venza (al año), se repite esto y listo.</p>
+          <p style="margin-top:.8rem">Cuando venza (al año), el panel lo vuelve a pedir una vez.</p>
         </div>
       </details>
     </div>
@@ -220,7 +226,7 @@
           <summary>Si algo sale mal</summary>
           <div class="plegable__cuerpo">
             <ul class="adm-lista">
-              <li><strong>"El código de conexión no sirve":</strong> se venció. Genera uno nuevo con los pasos de la pantalla de conexión.</li>
+              <li><strong>"La conexión del sitio venció":</strong> pasó el año del código de GitHub. Quien administra el sitio genera uno nuevo y lo pega una vez.</li>
               <li><strong>"Alguien publicó desde otro lado":</strong> otro celular publicó mientras editabas. Elige recargar para ver lo último.</li>
               <li><strong>Se dañó la carta:</strong> usa "Restaurar respaldo" con el último archivo que descargaste.</li>
               <li><strong>La web no cambia:</strong> espera dos minutos y abre en una pestaña nueva.</li>
@@ -228,14 +234,18 @@
           </div>
         </details>
         <details class="plegable">
-          <summary>Cambiar la clave</summary>
+          <summary>Cambiar la contraseña</summary>
           <div class="plegable__cuerpo">
-            <p>Escribe la clave nueva y el panel te da el texto que hay que reemplazar en el archivo <code>datos/negocio.json</code>, en el campo <code>adminHash</code>.</p>
+            <p>Escribe el usuario y la contraseña nueva. Se guarda y se publica sola; la próxima vez entras con los datos nuevos.</p>
             <div class="campo">
-              <label for="clave-nueva">Clave nueva</label>
+              <label for="usuario-nuevo">Usuario (correo)</label>
+              <input type="email" id="usuario-nuevo" autocomplete="off" spellcheck="false">
+            </div>
+            <div class="campo">
+              <label for="clave-nueva">Contraseña nueva</label>
               <input type="text" id="clave-nueva" autocomplete="off">
             </div>
-            <button class="btn btn--vidrio" type="button" id="boton-hash">Generar</button>
+            <button class="btn btn--vidrio" type="button" id="boton-hash">Cambiar</button>
             <p class="adm-hash" id="resultado-hash"></p>
           </div>
         </details>

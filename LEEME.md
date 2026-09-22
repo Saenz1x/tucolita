@@ -10,7 +10,7 @@ Manual de **tucolita.com**, escrito para el dueño del negocio. Guárdalo donde 
 
 - **tucolita.com** — la portada del negocio.
 - **tucolita.com/menu.html** — la carta completa, con buscador, filtros, modo noche/tarde y pedidos por WhatsApp. Trae el botón **"Elegí por mí"**, que le saca un plato al azar al que no se decide: solo cocina y cocteles, nunca una gaseosa ni algo marcado como agotado.
-- **El panel** — desde el celular editas la carta, los precios, las fotos y los textos, y los cambios salen a la web real en menos de un minuto. No hay hosting que pagar ni mensualidad.
+- **El panel** — con usuario y contraseña, desde cualquier celular, editas la carta, los precios, las fotos y los textos, y los cambios salen a la web real en menos de un minuto. No hay hosting que pagar ni mensualidad.
 
 Mientras el local no abra, la gente ve una **cortina de preapertura**: cuenta regresiva, un campo para dejar el contacto y una entrada con código para invitados.
 
@@ -20,13 +20,17 @@ Mientras el local no abra, la gente ve una **cortina de preapertura**: cuenta re
 
 ## 2. Entrar al panel
 
-Al final de la portada, abajo del todo, hay un botón que dice **"Admin"**. Pide una clave.
+Al final de la portada, abajo del todo, hay un botón que dice **"Admin"**. Pide usuario y contraseña, y con eso entras desde cualquier celular o computador. No hay nada más que configurar.
 
-**Clave:** `colita2026`
+El usuario y la contraseña se entregan aparte, en privado. **No los escribas en ningún archivo del sitio**: este manual y todo el sitio son públicos.
 
-Cámbiala apenas puedas (sección 8).
+El usuario no distingue mayúsculas. Si te equivocas, el mensaje es el mismo para las dos cosas: así nadie averigua si acertó el usuario probando. Cinco intentos por minuto. El panel se cierra solo si lo dejas quieto veinte minutos.
 
-La primera vez que entres desde un celular nuevo, el panel te pide una sola vez un **código de conexión**. Es lo que le da permiso para escribir en el sitio. Se saca así:
+Se puede cambiar cuando quieras (sección 8).
+
+### La configuración inicial (una sola vez, la hace quien administra el sitio)
+
+Para que el panel pueda escribir en la web necesita un permiso de GitHub. Eso se configura **una sola vez para todo el sitio**, no por celular, y el dueño nunca lo vuelve a ver. La primera vez que alguien entra con usuario y contraseña, el panel muestra la pantalla **"Configuración inicial"** y pide ese permiso:
 
 1. Entra a **github.com/settings/personal-access-tokens** con la cuenta dueña del sitio.
 2. Botón **"Generate new token"** → **"Fine-grained token"**.
@@ -35,15 +39,15 @@ La primera vez que entres desde un celular nuevo, el panel te pide una sola vez 
 5. **Permissions → Repository permissions → Contents** → **Read and write**. Nada más.
 6. **Generate token**, copia el código (solo se ve una vez) y pégalo en el panel.
 
-Ese código queda guardado y **cifrado con tu clave** en ese celular. De ahí en adelante entras solo con la clave. Si alguien roba el celular, sin la clave no puede sacarlo.
-
-El panel se cierra solo si lo dejas quieto veinte minutos.
+El panel lo guarda cifrado con la contraseña dentro del propio sitio. Al año, cuando venza, el panel vuelve a mostrar esa pantalla una vez y se repite lo mismo.
 
 ### Qué protege qué
 
-- La **clave** esconde el enlace para que nadie entre por curiosidad. Es una cortina, no una cerradura: alguien con conocimientos técnicos puede llegar a la dirección del panel sin ella.
-- El **código de conexión** es lo que de verdad protege el sitio. Sin él no se puede cambiar ni una coma, aunque alguien llegue al panel. Cuídalo como cuidas la clave del banco.
-- Si pierdes el celular: entra a GitHub → Settings → Personal access tokens → borra el token `Panel Tu Colita`. Ese celular queda inútil al instante.
+Esto conviene entenderlo bien, sin adornos:
+
+- El permiso de GitHub vive **cifrado con la contraseña** dentro de un archivo del sitio, que es público. Quien quiera abusar tendría que adivinar la contraseña probando desde su computador; el cifrado está hecho para que cada intento sea lento. Por eso **la contraseña es la única llave**: mientras más larga y rara, mejor. Una frase larga funciona mejor que una clave corta, por ejemplo cuatro palabras que no tengan relación entre sí.
+- Aun en el peor caso, ese permiso solo sirve para editar los archivos de este sitio: no toca tu correo, tu banco ni nada más. Y todo lo que se cambie queda en el historial, así que se puede devolver.
+- Si sospechas que alguien entró: GitHub → Settings → Personal access tokens → borra `Panel Tu Colita`. El panel queda sin permiso al instante; luego se configura uno nuevo.
 
 ---
 
@@ -77,12 +81,7 @@ En la pestaña **Apertura** del panel están el interruptor de la cortina, la fe
 
 ### Códigos de invitado
 
-Ya hay dos creados:
-
-| Código | Para quién |
-|---|---|
-| `TUCOLITA` | Invitados en general |
-| `PRENSA26` | Prensa |
+Ya hay dos creados, uno para invitados y otro para prensa. Los códigos se entregan en privado: aquí solo se guarda una huella de cada uno, nunca el código.
 
 Quien lo tenga entra a tucolita.com, toca **"Tengo un código"** y lo escribe. No importa si lo escribe en minúsculas o con espacios.
 
@@ -163,13 +162,9 @@ Casi todo pasa solo:
 
 ---
 
-## 8. Cambiar la clave
+## 8. Cambiar usuario o contraseña
 
-Panel → pestaña **Ayuda** → **"Cambiar la clave"**. Escribe la clave nueva y toca **Generar**: te da un texto largo y lo copia solo.
-
-Ese texto hay que pegarlo en el archivo `datos/negocio.json`, en el campo `adminHash`, reemplazando lo que haya. Si no quieres tocar archivos, pásaselo a Saenz Deluxe y lo cambia.
-
-La clave no se guarda escrita en ninguna parte: lo que se guarda es esa huella, que no se puede devolver a la clave original.
+Panel → pestaña **Ayuda** → **"Cambiar la contraseña"**. Escribe el usuario y la contraseña nueva (mínimo 10 caracteres) y toca **Cambiar**. Se guarda y se publica sola: la próxima vez entras con los datos nuevos, desde cualquier celular. No hay que tocar archivos.
 
 ---
 
@@ -199,9 +194,9 @@ La clave no se guarda escrita en ninguna parte: lo que se guarda es esa huella, 
 
 | Qué pasa | Qué hacer |
 |---|---|
-| "El código de conexión no sirve" | Se venció. Genera uno nuevo con los pasos de la sección 2. |
+| Aparece "Configuración inicial" otra vez | Venció el permiso de GitHub (pasó el año). Se genera uno nuevo con los pasos de la sección 2 y se pega una vez. |
 | "Alguien publicó desde otro dispositivo" | Otro celular publicó mientras editabas. Elige traer lo último y repite tus cambios. Solo publica los tuyos encima si estás seguro. |
 | Se dañó la carta | Pestaña Productos → "Restaurar respaldo" con el último archivo descargado. |
 | La web no se actualiza | Espera dos minutos y abre en una pestaña de incógnito. |
-| Se cerró el panel solo | Pasaron veinte minutos sin tocarlo. Entra otra vez con la clave. |
-| Perdiste el celular | GitHub → Settings → Personal access tokens → borra `Panel Tu Colita`. |
+| Se cerró el panel solo | Pasaron veinte minutos sin tocarlo. Entra otra vez. |
+| Crees que alguien sabe la contraseña | Cámbiala (sección 8). Si además sospechas que entró, borra el permiso en GitHub (sección 2). |

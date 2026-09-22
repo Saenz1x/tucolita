@@ -12,7 +12,13 @@
     "yaAbrimos": "Ya abrimos"
   },
   "codigos": [
-    { "etiqueta": "INVITADOS", "hash": "c48ed95b10d6fb53a5fbd65cb27825b6b1462fcc1484580714b4a7c90e2c131b" },
-    { "etiqueta": "PRENSA", "hash": "747c66dfb2de1eaf5f786af5000c8e58c87feeb6501d460be32760b9314cc615" }
+    {
+      "etiqueta": "INVITADOS",
+      "hash": "0b9c737fb1eb6f26f956179821dc65fe9bff2e8e33b6fa801d3df89a5ef0ad37"
+    },
+    {
+      "etiqueta": "PRENSA",
+      "hash": "f79d31f31ac9b6403df930471248a1380333333f7a032e46ee4ea7fda8c9da9f"
+    }
   ]
 }
