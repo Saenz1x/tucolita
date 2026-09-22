@@ -53,7 +53,7 @@
   function pintarTextos(t) {
     if (!t) return;
     var mapa = {
-      "hero-titulo": t.heroTitulo, "hero-bajada": t.heroBajada,
+      "hero-titulo": t.heroTitulo, "hero-bajada": t.heroBajada, "hero-voz": t.heroVoz,
       "concepto-titulo": t.conceptoTitulo, "concepto-p1": t.conceptoParrafo1,
       "concepto-p2": t.conceptoParrafo2, "noche-titulo": t.nocheTitulo,
       "noche-parrafo": t.nocheParrafo, "noche-epigrafe": t.nocheEpigrafe,
@@ -74,10 +74,36 @@
 
   /* ---------- el emblema sigue al puntero, muy poquito ---------- */
 
+  /* ---------- conmutador Día / Noche ---------- */
+
+  function temaActual() {
+    var guardado = document.documentElement.getAttribute("data-tema");
+    if (guardado) return guardado;
+    return window.matchMedia("(prefers-color-scheme: light)").matches ? "dia" : "noche";
+  }
+
+  function prepararTema() {
+    var caja = $("#conmutador-tema");
+    if (!caja) return;
+    var marcar = function (tema) {
+      caja.querySelectorAll("button").forEach(function (b) {
+        b.setAttribute("aria-pressed", b.dataset.tema === tema ? "true" : "false");
+      });
+    };
+    marcar(temaActual());
+    caja.addEventListener("click", function (ev) {
+      var b = ev.target.closest("button[data-tema]");
+      if (!b) return;
+      document.documentElement.setAttribute("data-tema", b.dataset.tema);
+      try { localStorage.setItem("tucolita_tema", b.dataset.tema); } catch (e) { }
+      marcar(b.dataset.tema);
+    });
+  }
+
   function prepararEmblema() {
-    // Hay dos emblemas (noche y día); se inclinan los dos, porque el
+    // Hay dos marcas (noche y día); se inclinan las dos, porque la
     // visible depende del tema y puede cambiar sin recargar.
-    var emblemas = document.querySelectorAll(".hero__emblema");
+    var emblemas = document.querySelectorAll(".hero__marca");
     if (!emblemas.length || pocoMovimiento) return;
     if (!window.matchMedia("(hover: hover)").matches) return;   // en táctil, quieto
 
@@ -236,6 +262,7 @@
       "<tr><td>Viernes y sábado</td><td>1:00 p.m. – 3:00 a.m.</td></tr>";
   });
 
+  prepararTema();
   prepararEmblema();
   prepararMuro();
   prepararRevelado();
