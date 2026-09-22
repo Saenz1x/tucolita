@@ -75,11 +75,13 @@
   /* ---------- el emblema sigue al puntero, muy poquito ---------- */
 
   function prepararEmblema() {
-    var emblema = $("#hero-emblema");
-    if (!emblema || pocoMovimiento) return;
+    // Hay dos emblemas (noche y día); se inclinan los dos, porque el
+    // visible depende del tema y puede cambiar sin recargar.
+    var emblemas = document.querySelectorAll(".hero__emblema");
+    if (!emblemas.length || pocoMovimiento) return;
     if (!window.matchMedia("(hover: hover)").matches) return;   // en táctil, quieto
 
-    var hero = emblema.closest(".hero");
+    var hero = emblemas[0].closest(".hero");
     var pendiente = false, x = 0, y = 0;
 
     hero.addEventListener("pointermove", function (ev) {
@@ -90,13 +92,13 @@
       pendiente = true;
       requestAnimationFrame(function () {
         pendiente = false;
-        emblema.style.transform =
-          "perspective(900px) rotateY(" + (x * 7).toFixed(2) + "deg) rotateX(" +
-          (-y * 7).toFixed(2) + "deg) translateZ(0)";
+        var t = "perspective(900px) rotateY(" + (x * 7).toFixed(2) + "deg) rotateX(" +
+                (-y * 7).toFixed(2) + "deg) translateZ(0)";
+        emblemas.forEach(function (el) { el.style.transform = t; });
       });
     });
     hero.addEventListener("pointerleave", function () {
-      emblema.style.transform = "";
+      emblemas.forEach(function (el) { el.style.transform = ""; });
     });
   }
 
