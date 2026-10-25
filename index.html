@@ -241,12 +241,15 @@
             <p id="concepto-p2">Cocina de verdad, barra propia y mesas para quedarse. Sin apuro, que para eso está el Centro.</p>
           </div>
           <div class="concepto__media revelar" style="--retraso:110ms">
-            <figure class="medio medio--foto">
-              <img src="imagenes/fachada.webp"
-                   srcset="imagenes/fachada-chica.webp 700w, imagenes/fachada.webp 1200w"
-                   sizes="(max-width:820px) 92vw, 440px"
-                   alt="La fachada de Tu Colita Lounge en el Centro de Buenaventura, con su aviso negro y dorado y mesas en el andén"
-                   width="1200" height="900" loading="lazy" decoding="async">
+<figure class="medio">
+              <div class="medio__marco medio__marco--retrato">
+                <img src="imagenes/cocina.webp"
+                     srcset="imagenes/cocina-chica.webp 720w, imagenes/cocina.webp 1200w"
+                     sizes="(max-width:820px) 88vw, 400px"
+                     alt="Chicharrón con papa a la francesa, limón y lechuga sobre tabla de madera, con tres salsas de la casa"
+                     width="1200" height="1600" loading="lazy" decoding="async">
+              </div>
+              <figcaption>De la cocina</figcaption>
             </figure>
           </div>
         </div>
@@ -276,13 +279,16 @@
             </div>
           </div>
           <div class="noche__media revelar" style="--retraso:110ms">
-            <!-- Video sin sonido: se reproduce solo cuando está en pantalla -->
-            <figure class="medio medio--vertical">
-              <video id="video-noche" muted loop playsinline preload="none"
-                     poster="imagenes/la-noche-poster.webp" width="720" height="1280"
-                     aria-label="Chicharrón con papas y un cóctel rojo servidos en una mesa de Tu Colita">
-                <source src="imagenes/la-noche.mp4" type="video/mp4">
-              </video>
+            <!-- Video sin sonido, en bucle -->
+            <figure class="medio">
+              <div class="medio__marco medio__marco--vertical">
+                <video id="video-noche" autoplay muted loop playsinline preload="auto"
+                       poster="imagenes/barra-poster.webp" width="720" height="1280"
+                       aria-label="Un cóctel rojo con hielo y fruta, recién servido en la barra de Tu Colita">
+                  <source src="imagenes/barra.mp4" type="video/mp4">
+                </video>
+              </div>
+              <figcaption>De la barra</figcaption>
             </figure>
           </div>
         </div>

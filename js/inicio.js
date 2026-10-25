@@ -209,28 +209,29 @@
     }
   }
 
-  /* ---------- video de la noche: corre solo mientras se ve ---------- */
+  /* ---------- video de la noche: siempre en bucle, sin sonido ---------- */
 
   function prepararVideo() {
     var video = $("#video-noche");
     if (!video) return;
-    // Con movimiento reducido no arranca solo: queda la portada y los controles.
-    if (pocoMovimiento || !("IntersectionObserver" in window)) {
-      video.controls = true;
-      video.preload = "metadata";
-      return;
+    var reproducir = function () {
+      var intento = video.play();
+      if (intento && intento.catch) intento.catch(function () {});
+    };
+    // Algunos celulares (ahorro de batería) frenan el autoplay: se reintenta
+    // al primer toque o scroll, y se pausa fuera de pantalla para no gastar.
+    ["touchstart", "scroll", "click"].forEach(function (ev) {
+      window.addEventListener(ev, function () { if (video.paused) reproducir(); }, { once: true, passive: true });
+    });
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (entradas) {
+        entradas.forEach(function (e) {
+          if (e.isIntersecting) reproducir(); else video.pause();
+        });
+      }, { threshold: .2 }).observe(video);
+    } else {
+      reproducir();
     }
-    var io = new IntersectionObserver(function (entradas) {
-      entradas.forEach(function (e) {
-        if (e.isIntersecting) {
-          var intento = video.play();
-          if (intento && intento.catch) intento.catch(function () { video.controls = true; });
-        } else {
-          video.pause();
-        }
-      });
-    }, { threshold: .25 });
-    io.observe(video);
   }
 
   /* ---------- revelado al hacer scroll, escalonado por grupo ---------- */
