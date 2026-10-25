@@ -91,7 +91,7 @@
     { "id": "premio-rojo-15l", "categoria": "Bebidas Frías", "nombre": "Premio Rojo 1,5 L", "descripcion": "", "precio": 10000, "etiquetas": [], "imagen": "", "agotado": false, "orden": 19 },
     { "id": "jugo-del-valle-15l", "categoria": "Bebidas Frías", "nombre": "Jugo Del Valle 1,5 L", "descripcion": "", "precio": 10000, "etiquetas": [], "imagen": "", "agotado": false, "orden": 20 },
 
-    { "id": "aromatica", "categoria": "Café", "nombre": "Aromática", "descripcion": "", "precio": 3000, "etiquetas": [], "imagen": "", "agotado": false, "orden": 1 },
+    { "id": "aromatica", "categoria": "Café", "nombre": "Aromática", "descripcion": "", "precio": 4000, "etiquetas": [], "imagen": "", "agotado": false, "orden": 1 },
     { "id": "cafe-expresso", "categoria": "Café", "nombre": "Café Expresso", "descripcion": "", "precio": 4000, "etiquetas": [], "imagen": "", "agotado": false, "orden": 2 },
     { "id": "capuchino", "categoria": "Café", "nombre": "Capuchino", "descripcion": "", "precio": 6000, "etiquetas": [], "imagen": "", "agotado": false, "orden": 3 },
     { "id": "milo", "categoria": "Café", "nombre": "Milo", "descripcion": "", "precio": 8000, "etiquetas": [], "imagen": "", "agotado": false, "orden": 4 },
@@ -114,10 +114,16 @@
 
     { "id": "caneca-aguardiente", "categoria": "Botellas", "nombre": "Caneca Aguardiente", "descripcion": "", "precio": 55000, "etiquetas": [], "imagen": "", "agotado": false, "orden": 1 },
     { "id": "botella-vino-estoril", "categoria": "Botellas", "nombre": "Botella Vino Estoril", "descripcion": "", "precio": 55000, "etiquetas": [], "imagen": "", "agotado": false, "orden": 2 },
-    { "id": "caneca-ron", "categoria": "Botellas", "nombre": "Caneca Ron", "descripcion": "", "precio": 60000, "etiquetas": [], "imagen": "", "agotado": false, "orden": 3 },
-    { "id": "botella-aguardiente", "categoria": "Botellas", "nombre": "Botella Aguardiente", "descripcion": "", "precio": 65000, "etiquetas": [], "imagen": "", "agotado": false, "orden": 4 },
-    { "id": "botella-brandy-domecq", "categoria": "Botellas", "nombre": "Botella Brandy Domecq", "descripcion": "", "precio": 65000, "etiquetas": [], "imagen": "", "agotado": false, "orden": 5 },
-    { "id": "botella-ron-viejo-de-caldas", "categoria": "Botellas", "nombre": "Botella Ron Viejo de Caldas", "descripcion": "", "precio": 75000, "etiquetas": [], "imagen": "", "agotado": false, "orden": 6 },
-    { "id": "botella-jimador", "categoria": "Botellas", "nombre": "Botella Jimador", "descripcion": "", "precio": 160000, "etiquetas": [], "imagen": "", "agotado": false, "orden": 7 }
+    { "id": "caneca-ron", "categoria": "Botellas", "nombre": "Caneca Ron", "descripcion": "", "precio": 50000, "etiquetas": [], "imagen": "", "agotado": false, "orden": 3 },
+    { "id": "botella-ron", "categoria": "Botellas", "nombre": "Botella Ron", "descripcion": "", "precio": 110000, "etiquetas": [], "imagen": "", "agotado": false, "orden": 4 },
+    { "id": "botella-aguardiente-manzanares", "categoria": "Botellas", "nombre": "Botella Aguardiente Manzanares", "descripcion": "", "precio": 110000, "etiquetas": [], "imagen": "", "agotado": false, "orden": 5 },
+    { "id": "botella-aguardiente-antioqueno", "categoria": "Botellas", "nombre": "Botella Aguardiente Antioqueño", "descripcion": "", "precio": 110000, "etiquetas": [], "imagen": "", "agotado": false, "orden": 6 },
+    { "id": "botella-blanco", "categoria": "Botellas", "nombre": "Botella Blanco", "descripcion": "", "precio": 100000, "etiquetas": [], "imagen": "", "agotado": false, "orden": 7 },
+    { "id": "botella-black-and-white", "categoria": "Botellas", "nombre": "Botella Black & White", "descripcion": "", "precio": 120000, "etiquetas": [], "imagen": "", "agotado": false, "orden": 8 },
+    { "id": "botella-baileys", "categoria": "Botellas", "nombre": "Botella Baileys", "descripcion": "", "precio": 140000, "etiquetas": [], "imagen": "", "agotado": false, "orden": 9 },
+    { "id": "botella-brandy-domecq", "categoria": "Botellas", "nombre": "Botella Brandy Domecq", "descripcion": "", "precio": 140000, "etiquetas": [], "imagen": "", "agotado": false, "orden": 10 },
+    { "id": "botella-jimador-reposado", "categoria": "Botellas", "nombre": "Botella Jimador Reposado", "descripcion": "", "precio": 180000, "etiquetas": [], "imagen": "", "agotado": false, "orden": 11 },
+    { "id": "botella-jimador-blanco", "categoria": "Botellas", "nombre": "Botella Jimador Blanco", "descripcion": "", "precio": 200000, "etiquetas": [], "imagen": "", "agotado": false, "orden": 12 },
+    { "id": "botella-jimador-cristalino", "categoria": "Botellas", "nombre": "Botella Jimador Cristalino", "descripcion": "", "precio": 270000, "etiquetas": [], "imagen": "", "agotado": false, "orden": 13 }
   ]
 }

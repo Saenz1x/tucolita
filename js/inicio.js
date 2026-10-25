@@ -1,7 +1,7 @@
 /* ============================================================
    TU COLITA LOUNGE — inicio.js
    Página central: estado abierto/cerrado, tabla de horarios,
-   textos editables, nav de vidrio, muro perezoso, revelado
+   textos editables, nav de vidrio, muro perezoso, video de la noche, revelado
    escalonado, emblema que responde al puntero y acceso al panel.
    ============================================================ */
 (function () {
@@ -209,6 +209,30 @@
     }
   }
 
+  /* ---------- video de la noche: corre solo mientras se ve ---------- */
+
+  function prepararVideo() {
+    var video = $("#video-noche");
+    if (!video) return;
+    // Con movimiento reducido no arranca solo: queda la portada y los controles.
+    if (pocoMovimiento || !("IntersectionObserver" in window)) {
+      video.controls = true;
+      video.preload = "metadata";
+      return;
+    }
+    var io = new IntersectionObserver(function (entradas) {
+      entradas.forEach(function (e) {
+        if (e.isIntersecting) {
+          var intento = video.play();
+          if (intento && intento.catch) intento.catch(function () { video.controls = true; });
+        } else {
+          video.pause();
+        }
+      });
+    }, { threshold: .25 });
+    io.observe(video);
+  }
+
   /* ---------- revelado al hacer scroll, escalonado por grupo ---------- */
 
   function prepararRevelado() {
@@ -340,6 +364,7 @@
   prepararTema();
   prepararEmblema();
   prepararMuro();
+  prepararVideo();
   prepararRevelado();
   prepararAdmin();
 })();

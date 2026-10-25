@@ -1,7 +1,7 @@
 {
   "nombre": "Tu Colita Lounge",
   "descriptor": "Café · Cocina · Lounge",
-  "direccion": "CL 1 # 2A-11, El Centro, Buenaventura",
+  "direccion": "Cra. 2 #1-18 (al frente del Banco Agrario), El Centro, Buenaventura",
   "ciudad": "Buenaventura, Valle del Cauca",
   "telefono": "+57 312 303 7666",
   "whatsapp": "573123037666",
@@ -12,7 +12,7 @@
     "tiktok": "https://tiktok.com/@tucolita.lounge",
     "facebook": "https://facebook.com/tucolita.lounge",
     "muro": "https://padlet.com/tucolita/tu-colita-lounge-s023stey0vqshekxe2nj",
-    "mapa": "https://www.google.com/maps/search/?api=1&query=CL+1+%23+2A-11%2C+El+Centro%2C+Buenaventura%2C+Valle+del+Cauca"
+    "mapa": "https://www.google.com/maps/search/?api=1&query=Carrera+2+%231-18%2C+Buenaventura%2C+Valle+del+Cauca"
   },
   "horarios": {
     "lun": { "abre": "13:00", "cierra": "23:00", "cruzaMedianoche": false, "cerrado": false },
