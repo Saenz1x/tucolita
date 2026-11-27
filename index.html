@@ -4,20 +4,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Tu Colita Lounge — Café, cocina y bar en el Centro de Buenaventura</title>
-  <meta name="description" content="Tu Colita Lounge abre el 5 de octubre en el Centro de Buenaventura: café por la tarde, sánduches de verdad, parrilla al carbón y una barra sin afán. Cra. 2 #1-18, al frente del Banco Agrario.">
+  <meta name="description" content="Tu Colita Lounge en el Centro de Buenaventura: café por la tarde, sánduches de verdad, parrilla al carbón y una barra sin afán. Cra. 2 #1-18, al frente del Banco Agrario.">
   <meta name="theme-color" content="#0B0908">
 
   <meta property="og:type" content="restaurant">
   <meta property="og:title" content="Tu Colita Lounge — Buenaventura">
-  <meta property="og:description" content="Abrimos el 5 de octubre en el Centro de Buenaventura. Café, cocina y una barra sin afán.">
+  <meta property="og:description" content="Café, cocina y una barra sin afán en el Centro de Buenaventura. Abierto todos los días desde la 1:00 p.m.">
   <meta property="og:url" content="https://tucolita.com/">
+  <link rel="canonical" href="https://tucolita.com/">
+  <meta property="og:site_name" content="Tu Colita Lounge">
   <meta property="og:image" content="https://tucolita.com/imagenes/og-tucolita.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:locale" content="es_CO">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Tu Colita Lounge — Buenaventura">
-  <meta name="twitter:description" content="Abrimos el 5 de octubre en el Centro de Buenaventura. Café, cocina y una barra sin afán.">
+  <meta name="twitter:description" content="Café, cocina y una barra sin afán en el Centro de Buenaventura. Abierto todos los días desde la 1:00 p.m.">
   <meta name="twitter:image" content="https://tucolita.com/imagenes/og-tucolita.jpg">
 
   <link rel="icon" type="image/png" sizes="32x32" href="imagenes/favicon-32.png">
@@ -80,7 +82,8 @@
       { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Sunday"], "opens": "13:00", "closes": "23:00" },
       { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Friday","Saturday"], "opens": "13:00", "closes": "03:00" }
     ],
-    "hasMenu": "https://tucolita.com/menu.html",
+    "hasMenu": "https://tucolita.com/menu",
+    "menu": "https://tucolita.com/menu",
     "sameAs": [
       "https://instagram.com/tucolita.lounge",
       "https://tiktok.com/@tucolita.lounge",
@@ -99,7 +102,7 @@
     <div class="puerta__interior">
       <img class="puerta__emblema logo-noche" src="imagenes/emblema.webp" alt="Emblema de Tu Colita Lounge" width="230" height="209" fetchpriority="high">
       <img class="puerta__emblema logo-dia" src="imagenes/emblema-tinta.webp" alt="" width="230" height="209" loading="lazy">
-      <h1 class="puerta__titulo" data-puerta="titulo">Estamos terminando de montar la barra</h1>
+      <p class="puerta__titulo display" data-puerta="titulo">Estamos terminando de montar la barra</p>
       <p class="puerta__bajada" data-puerta="bajada">El Centro de Buenaventura va a tener dónde quedarse hasta tarde.</p>
 
       <div class="cuenta" data-puerta="cuenta" role="timer" aria-live="off">
@@ -169,7 +172,7 @@
         <button type="button" data-tema="dia" aria-pressed="false">Día</button>
         <button type="button" data-tema="noche" aria-pressed="true">Noche</button>
       </div>
-      <a class="btn btn--oro" href="menu.html">Ver el menú</a>
+      <a class="btn btn--oro" href="/menu">Ver el menú</a>
     </div>
   </header>
 
@@ -200,7 +203,7 @@
             </p>
 
             <div class="hero__acciones">
-              <a class="btn btn--oro" href="menu.html">Ver el menú</a>
+              <a class="btn btn--oro" href="/menu">Ver el menú</a>
               <a class="btn btn--vidrio" href="https://wa.me/573123037666?text=Hola%2C%20quiero%20reservar%20una%20mesa%20en%20Tu%20Colita%20%E2%9C%A8" target="_blank" rel="noopener">Reservar mesa</a>
             </div>
 
@@ -326,7 +329,7 @@
             <li>Salchi Todo</li>
             <li>Margarita de Sabores</li>
           </ul>
-          <a class="btn btn--oro" href="menu.html" style="min-width:230px">Ver el menú completo</a>
+          <a class="btn btn--oro" href="/menu" style="min-width:230px">Ver el menú completo</a>
         </div>
       </div>
     </section>
@@ -403,7 +406,7 @@
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>
           Cómo llegar
         </a>
-        <a class="atajo" href="menu.html">
+        <a class="atajo" href="/menu">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="16" y2="12"/><line x1="4" y1="17" x2="12" y2="17"/></svg>
           Menú
         </a>

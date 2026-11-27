@@ -3,16 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Menú — Tu Colita Lounge</title>
+  <title>Menú de Tu Colita Lounge en Buenaventura — Picadas, parrilla y bar</title>
   <meta name="description" content="La carta completa de Tu Colita Lounge en el Centro de Buenaventura: picadas, parrilla, sánduches, salchipapas, café y barra. Pide por WhatsApp.">
   <meta name="theme-color" content="#0B0908">
   <!-- QUITAR el día de la apertura: noindex mientras la carta no sea definitiva -->
-  <meta name="robots" content="noindex">
 
   <meta property="og:type" content="website">
   <meta property="og:title" content="Menú — Tu Colita Lounge">
   <meta property="og:description" content="Picadas, parrilla, sánduches, salchipapas, café y barra. El Centro, Buenaventura.">
-  <meta property="og:url" content="https://tucolita.com/menu.html">
+  <meta property="og:url" content="https://tucolita.com/menu">
+  <link rel="canonical" href="https://tucolita.com/menu">
+  <meta property="og:site_name" content="Tu Colita Lounge">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@graph":[
+   {"@type":"Menu","name":"Menú de Tu Colita Lounge","url":"https://tucolita.com/menu","inLanguage":"es-CO"},
+   {"@type":"BreadcrumbList","itemListElement":[
+    {"@type":"ListItem","position":1,"name":"Inicio","item":"https://tucolita.com/"},
+    {"@type":"ListItem","position":2,"name":"Menú","item":"https://tucolita.com/menu"}]}
+  ]}
+  </script>
   <meta property="og:image" content="https://tucolita.com/imagenes/og-tucolita.jpg">
   <meta property="og:locale" content="es_CO">
   <meta name="twitter:card" content="summary_large_image">
@@ -66,7 +75,7 @@
     <div class="puerta__interior">
       <img class="puerta__emblema logo-noche" src="imagenes/emblema.webp" alt="Emblema de Tu Colita Lounge" width="230" height="209" fetchpriority="high">
       <img class="puerta__emblema logo-dia" src="imagenes/emblema-tinta.webp" alt="" width="230" height="209" loading="lazy">
-      <h1 class="puerta__titulo" data-puerta="titulo">Estamos terminando de montar la barra</h1>
+      <p class="puerta__titulo display" data-puerta="titulo">Estamos terminando de montar la barra</p>
       <p class="puerta__bajada" data-puerta="bajada">El Centro de Buenaventura va a tener dónde quedarse hasta tarde.</p>
 
       <div class="cuenta" data-puerta="cuenta" role="timer" aria-live="off">
@@ -120,8 +129,9 @@
   <!-- ============ FIN DE LA PUERTA ============ -->
 
   <header class="cab-menu">
+    <h1 class="solo-lectores">Menú de Tu Colita Lounge en Buenaventura</h1>
     <div class="contenedor cab-menu__fila">
-      <a class="cab-menu__logo" href="index.html" aria-label="Volver al inicio de Tu Colita Lounge">
+      <a class="cab-menu__logo" href="/" aria-label="Volver al inicio de Tu Colita Lounge">
         <img class="logo-noche" src="imagenes/marca-chica.webp" alt="Tu Colita Lounge" width="300" height="220">
         <img class="logo-dia" src="imagenes/marca-tinta.webp" alt="" width="300" height="214" loading="lazy">
       </a>
