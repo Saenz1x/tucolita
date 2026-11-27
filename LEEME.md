@@ -20,7 +20,7 @@ Mientras el local no abra, la gente ve una **cortina de preapertura**: cuenta re
 
 ## 2. Entrar al panel
 
-La carta se edita en el **panel de Saenz Deluxe**: **https://panel.srv2179946.hstgr.cloud** (también desde el botón **"Admin"** al final de la portada).
+La carta se edita en el **panel de Saenz Deluxe**: **https://panel.saenzdeluxe.site** (también desde el botón **"Admin"** al final de la portada).
 
 - Entras con tu **correo y contraseña**. Para tenerlo a mano en el celular: ábrelo en el navegador → menú → **"Agregar a pantalla de inicio"**.
 - Si olvidas la contraseña, pídele a Saenz Deluxe que te la cambie (o cámbiala tú en **Más → Mi cuenta**).
@@ -141,7 +141,7 @@ En el panel: **Más → Mi cuenta → Cambiar contraseña**. Para cambiar el cor
 ## 9. Cómo se publica el sitio (referencia técnica)
 
 - El código vive en GitHub (rama `main`). La VPS de Saenz Deluxe (Hostinger, Docker + Traefik) lo descarga y lo sirve en **tucolita.com** con HTTPS.
-- La **carta** no está en el código: `js/menu.js` la lee del panel (`menu_publico` de Supabase, vía `https://panel.srv2179946.hstgr.cloud/menu.js`) y se actualiza sola. `datos/menu.json` queda solo como **respaldo** si el panel no responde.
+- La **carta** no está en el código: `js/menu.js` la lee del panel (`menu_publico` de Supabase, vía `https://panel.saenzdeluxe.site/menu.js`) y se actualiza sola. `datos/menu.json` queda solo como **respaldo** si el panel no responde.
 - Horarios y textos de la portada siguen en `datos/negocio.json`.
 
 ---

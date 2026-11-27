@@ -260,7 +260,7 @@
 
   /* ---------- acceso al panel de Saenz Deluxe ---------- */
   // La carta, los precios, las fotos y los agotados se editan en el panel general.
-  var PANEL = "https://panel.srv2179946.hstgr.cloud";
+  var PANEL = "https://panel.saenzdeluxe.site";
   function prepararAdmin() {
     var boton = $("#boton-admin");
     if (boton) boton.addEventListener("click", function () { location.href = PANEL; });

@@ -345,7 +345,7 @@
   }
 
   /* ---------- carta desde el panel de Saenz Deluxe ---------- */
-  // La carta se edita en el panel (panel.srv2179946.hstgr.cloud) y llega en vivo.
+  // La carta se edita en el panel (panel.saenzdeluxe.site) y llega en vivo.
   // Si el panel no responde, se usa datos/menu.json como respaldo.
   var NEGOCIO_PANEL = "tu-colita";
 
