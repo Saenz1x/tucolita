@@ -414,7 +414,7 @@
       <div class="footer__legal">
         <p class="aviso-licor">Prohíbase el expendio de bebidas embriagantes a menores de edad. El exceso de alcohol es perjudicial para la salud. Ley 30 de 1986.</p>
         <div class="footer__cierre">
-          <a class="footer__credito" href="https://instagram.com/saenzdeluxe" target="_blank" rel="noopener">Sitio por Saenz Deluxe</a>
+          <a class="footer__credito" href="https://saenzdeluxe.site" target="_blank" rel="noopener">Hecho por Saenz Deluxe</a>
           <button class="btn-admin" type="button" id="boton-admin" aria-label="Entrar al panel">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10.5" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg>
             Admin
@@ -423,28 +423,6 @@
       </div>
     </div>
   </footer>
-
-  <!-- Clave para entrar al panel -->
-  <div class="modal" id="modal-admin" role="dialog" aria-modal="true" aria-labelledby="titulo-admin">
-    <div class="modal__caja" style="position:relative">
-      <button class="modal__cerrar" type="button" id="cerrar-admin" aria-label="Cerrar">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
-      </button>
-      <h2 id="titulo-admin">Panel de Tu Colita</h2>
-      <p>Solo para el dueño.</p>
-      <form id="form-admin" novalidate>
-        <input class="modal__campo" type="email" id="usuario-admin" placeholder="Usuario"
-               autocomplete="username" inputmode="email" spellcheck="false" aria-label="Usuario">
-        <input class="modal__campo" type="password" id="clave-admin" placeholder="Contraseña"
-               autocomplete="current-password" aria-label="Contraseña">
-        <p class="modal__error" id="error-admin" role="alert"></p>
-        <div class="modal__acciones">
-          <button class="btn btn--vidrio" type="button" id="cancelar-admin">Cancelar</button>
-          <button class="btn btn--oro" type="submit">Entrar</button>
-        </div>
-      </form>
-    </div>
-  </div>
 
   <script src="js/puerta.js" defer></script>
   <script src="js/horario.js" defer></script>

@@ -17,7 +17,6 @@
   ];
 
   var horariosNegocio = null;
-  var cuentaAdmin = null;
   var pocoMovimiento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   /* ---------- estado abierto / cerrado ---------- */
@@ -259,77 +258,12 @@
     });
   }
 
-  /* ---------- acceso al panel ---------- */
-
-  function huellaContrasena(contrasena, salHex, iteraciones) {
-    var sal = new Uint8Array(salHex.length / 2);
-    for (var i = 0; i < sal.length; i++) sal[i] = parseInt(salHex.substr(i * 2, 2), 16);
-    return crypto.subtle.importKey("raw", new TextEncoder().encode(contrasena), "PBKDF2", false, ["deriveBits"])
-      .then(function (base) {
-        return crypto.subtle.deriveBits(
-          { name: "PBKDF2", salt: sal, iterations: iteraciones, hash: "SHA-256" }, base, 256);
-      })
-      .then(function (buf) {
-        return Array.from(new Uint8Array(buf)).map(function (b) {
-          return b.toString(16).padStart(2, "0");
-        }).join("");
-      });
-  }
-
+  /* ---------- acceso al panel de Saenz Deluxe ---------- */
+  // La carta, los precios, las fotos y los agotados se editan en el panel general.
+  var PANEL = "https://panel.srv2179946.hstgr.cloud";
   function prepararAdmin() {
     var boton = $("#boton-admin");
-    var modal = $("#modal-admin");
-    var form = $("#form-admin");
-    var usuario = $("#usuario-admin");
-    var campo = $("#clave-admin");
-    var error = $("#error-admin");
-    if (!boton || !modal) return;
-
-    var abrir = function () {
-      modal.classList.add("visible");
-      error.textContent = "";
-      usuario.value = "";
-      campo.value = "";
-      setTimeout(function () { usuario.focus(); }, 60);
-    };
-    var cerrar = function () { modal.classList.remove("visible"); };
-
-    boton.addEventListener("click", abrir);
-    $("#cerrar-admin").addEventListener("click", cerrar);
-    $("#cancelar-admin").addEventListener("click", cerrar);
-    modal.addEventListener("click", function (ev) { if (ev.target === modal) cerrar(); });
-    document.addEventListener("keydown", function (ev) {
-      if (ev.key === "Escape" && modal.classList.contains("visible")) cerrar();
-    });
-
-    form.addEventListener("submit", function (ev) {
-      ev.preventDefault();
-      error.textContent = "";
-      var correo = usuario.value.trim().toLowerCase();
-      var clave = campo.value;
-      if (!correo || !clave) { error.textContent = "Faltan datos."; return; }
-      if (!cuentaAdmin) {
-        // Sin cuenta leída no se bloquea el paso: el panel pide el ingreso igual.
-        location.href = "admin.html";
-        return;
-      }
-      if (!(window.crypto && crypto.subtle)) {
-        error.textContent = "Este navegador no permite validar aquí. Entra a tucolita.com/admin.html directamente.";
-        return;
-      }
-      var boton = form.querySelector("button[type=submit]");
-      boton.disabled = true;
-      huellaContrasena(clave, cuentaAdmin.sal, cuentaAdmin.iteraciones).then(function (h) {
-        boton.disabled = false;
-        if (correo === String(cuentaAdmin.usuario).toLowerCase() && h === cuentaAdmin.hash) {
-          location.href = "admin.html";
-        } else {
-          error.textContent = "Usuario o contraseña incorrectos.";
-          campo.value = "";
-          campo.focus();
-        }
-      });
-    });
+    if (boton) boton.addEventListener("click", function () { location.href = PANEL; });
   }
 
   /* ---------- arranque ---------- */
@@ -341,7 +275,6 @@
   ]).then(function (res) {
     var negocio = res[0], pre = res[1];
     horariosNegocio = negocio.horarios;
-    cuentaAdmin = negocio.acceso || null;
     pintarTextos(negocio.textos);
     pintarTablaHorarios();
     pintarHorariosPie();

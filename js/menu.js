@@ -21,7 +21,6 @@
   var datosMenu = null;
   var datosNegocio = null;
   var chipActivo = null;
-  var esPreview = false;
 
   /* ---------- utilidades ---------- */
 
@@ -345,30 +344,51 @@
     }
   }
 
-  function ponerCintaPreview() {
-    var cinta = document.createElement("div");
-    cinta.className = "cinta-preview";
-    cinta.textContent = "Vista previa — sin publicar";
-    document.body.prepend(cinta);
+  /* ---------- carta desde el panel de Saenz Deluxe ---------- */
+  // La carta se edita en el panel (panel.srv2179946.hstgr.cloud) y llega en vivo.
+  // Si el panel no responde, se usa datos/menu.json como respaldo.
+  var NEGOCIO_PANEL = "tu-colita";
+
+  function desdePanel(m) {
+    var etq = {};
+    (m.etiquetas || []).forEach(function (t) { etq[t.id] = String(t.nombre).toLowerCase(); });
+    var categorias = [], productos = [];
+    (m.categorias || []).forEach(function (c, i) {
+      categorias.push({ id: c.id, nombre: c.nombre, descripcion: c.descripcion || "", orden: i + 1 });
+      c.productos.forEach(function (p, j) {
+        productos.push({
+          id: p.id, categoria: c.nombre, nombre: p.nombre, descripcion: p.descripcion || "",
+          precio: p.precio == null ? 0 : Number(p.precio),
+          etiquetas: (p.etiquetas || []).map(function (id) { return etq[id]; }).filter(Boolean),
+          imagen: p.imagen_thumb_url || p.imagen_url || "",
+          agotado: p.disponible === false, orden: j + 1
+        });
+      });
+    });
+    return { vigencia: "", categorias: categorias, productos: productos };
+  }
+
+  function cargarCarta() {
+    var respaldo = function () {
+      return fetch("datos/menu.json").then(function (r) { if (!r.ok) throw 0; return r.json(); });
+    };
+    if (!window.SaenzMenu) return respaldo();
+    return SaenzMenu.cargar(NEGOCIO_PANEL).then(desdePanel).catch(respaldo);
+  }
+
+  function escucharPanel() {
+    if (!window.SaenzMenu) return;
+    SaenzMenu.escuchar(NEGOCIO_PANEL, function (m) {
+      datosMenu = desdePanel(m);
+      pintarCarta();
+      filtrar();
+    });
   }
 
   function iniciar() {
-    // Modo vista previa desde el panel: datos editados en sessionStorage.
-    var params = new URLSearchParams(location.search);
-    if (params.get("preview") === "1") {
-      try {
-        var crudo = sessionStorage.getItem("tucolita_preview_menu");
-        if (crudo) {
-          datosMenu = JSON.parse(crudo);
-          esPreview = true;
-        }
-      } catch (e) { }
-    }
-
     var pedidos = [
       fetch("datos/negocio.json").then(function (r) { if (!r.ok) throw 0; return r.json(); }),
-      datosMenu ? Promise.resolve(datosMenu)
-        : fetch("datos/menu.json").then(function (r) { if (!r.ok) throw 0; return r.json(); }),
+      cargarCarta(),
       fetch("datos/preapertura.json").then(function (r) { if (!r.ok) throw 0; return r.json(); })
         .catch(function () { return null; })
     ];
@@ -378,10 +398,10 @@
       datosMenu = res[1];
       var pre = res[2];
 
-      if (esPreview) ponerCintaPreview();
       pintarCarta();
       filtrar();
       prepararAzar();
+      escucharPanel();
 
       var apertura = pre ? Date.parse(pre.apertura) : 0;
       var enPreapertura = function () { return !!(pre && pre.modo && Date.now() < apertura); };

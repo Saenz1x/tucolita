@@ -1352,16 +1352,7 @@ h1,h2,h3,.display{
   gap:.6rem;
 }
 
-/* Cinta de vista previa */
-.cinta-preview{
-  position:sticky; top:0; z-index:60;
-  background:var(--brasa);
-  color:#FFF6EC;
-  text-align:center;
-  font-weight:700;
-  font-size:.85rem;
-  padding:.5rem 1rem;
-}
+.pie-credito a{ color:inherit; font-weight:700; text-decoration:none; border-bottom:1px solid currentColor }
 
 /* Aviso de carga fallida */
 .aviso-carga{
